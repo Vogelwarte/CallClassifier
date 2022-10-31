@@ -5,6 +5,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import List
 
+from BNResultTools.BirdNETSelectionRecord_David import BirdNETSelectionRecord_David
 from BNResultTools.RelativeTimeSegment import RelativeTimeSegment
 from BNResultTools.Table1SelectionRecord import Table1SelectionRecord
 from BNResultTools.files_dirs_tools import list_of_files, dictionary_by_bare_name
@@ -70,7 +71,7 @@ if __name__ == '__main__':
 	print(args)
 
 	annot_name: str = args.annotation.strip().lower()
-	input_extension = ".Table.1.selections.txt" #".wav.csv"
+	input_extension = ".csv" #".wav.csv"
 	chunk_def_files = list_of_files(args.input, input_extension)
 	af_extension = ".wav"
 	audio_files = dictionary_by_bare_name(list_of_files(args.audio_root_dir, af_extension), af_extension)
@@ -87,16 +88,17 @@ if __name__ == '__main__':
 		print(f"\nFound {len(chunk_def_files)} inpupt files.\n", file=rf)
 
 		for cdf in chunk_def_files:
-			name_stem: str = cdf.name[0:-len(input_extension)]
-			audio_file = audio_files.get(name_stem,None)
-			if audio_file is None:
-				print("cannot find audio file with name ["+name_stem+".(wav)]", file=sys.stderr)
-				print(f"{str(cdf.name)}: cannot find the corresponding audio file", file=rf)
-				continue
-			chunk_definitions:List[Table1SelectionRecord] = Table1SelectionRecord.parse_file(cdf)
+
+			chunk_definitions:List[BirdNETSelectionRecord_David] = BirdNETSelectionRecord_David.parse_file(cdf)
 			c_count = 0
 			not_annot = 0
 			for cd  in chunk_definitions:
+				name_stem: str = cd.sound_files[0:-len(input_extension)]
+				audio_file = audio_files.get(name_stem, None)
+				if audio_file is None:
+					print("cannot find audio file with name [" + name_stem + ".(wav)]", file=sys.stderr)
+					print(f"{str(cdf.name)}: cannot find the corresponding audio file", file=rf)
+					continue
 				if annot_name in cd.annotation.lower():
 					if createChunks(cd, audio_file, name_stem, exe_output_dir, cd.annotation):
 						c_count += 1
