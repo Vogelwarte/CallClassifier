@@ -34,8 +34,7 @@ def createChunks(cd: Table1SelectionRecord, audio_file: Path, name_stem: str,  o
 	nfp_p3: Path = output_dir / Path( name_stem+"_"+cd.to_int_mmss_string().replace(":", ";")+"_("+a+")_3s_extended."+audio_type)
 	ret_p3: bool = createChunkFile(nfp_p3, cd_p3, audio_file)
 
-	return ret and ret_p3
-
+	return ret and ret_p3, new_file_path
 
 def createChunkFile(file_path: Path, rts:RelativeTimeSegment, audio_file: Path) -> bool:
 	if file_path.exists():
@@ -75,6 +74,7 @@ if __name__ == '__main__':
 	chunk_def_files = list_of_files(args.input, input_extension)
 	af_extension = ".wav"
 	audio_files = dictionary_by_bare_name(list_of_files(args.audio_root_dir, af_extension), af_extension)
+	#print(str(audio_files))
 	odir: Path = Path(args.output_directory)
 	if( not odir.exists() ):
 		os.mkdir( odir )
@@ -93,18 +93,24 @@ if __name__ == '__main__':
 			c_count = 0
 			not_annot = 0
 			for cd  in chunk_definitions:
-				name_stem: str = cd.sound_files[0:-len(input_extension)]
+				name_stem: str = cd.sound_files[0:-4]
+				print(name_stem+" "+cd.sound_files,file=sys.stderr)
 				audio_file = audio_files.get(name_stem, None)
 				if audio_file is None:
 					print("cannot find audio file with name [" + name_stem + ".(wav)]", file=sys.stderr)
 					print(f"{str(cdf.name)}: cannot find the corresponding audio file", file=rf)
 					continue
-				if annot_name in cd.annotation.lower():
-					if createChunks(cd, audio_file, name_stem, exe_output_dir, cd.annotation):
+				if annot_name in cd.species_code.lower():
+					success, name =createChunks(cd, audio_file, name_stem, exe_output_dir, "type_"+str(cd.type))
+					if success:
+						classes = ["0", "0", "0", "0"]
+						if cd.type <=4:
+							classes[cd.type-1] ="1"
+							print(str(name)+", "+",".join(classes), file=rf)
 						c_count += 1
 				else:
 					not_annot += 1
-			print(f"{str(cdf.name)}: {c_count} of {len(chunk_definitions)} chunks created, {not_annot} ignored as not '{annot_name}'", file=rf)
+			#print(f"{str(cdf.name)}: {c_count} of {len(chunk_definitions)} chunks created, {not_annot} ignored as not '{annot_name}'", file=rf)
 			df_processed+=1
 
 		print(f"\n End of processing, {df_processed} of {len(chunk_def_files)} input files processed", file=rf)

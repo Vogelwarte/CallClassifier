@@ -52,8 +52,8 @@ class BirdNETSelectionRecord_David(BirdNETResultRecord):
         common_name = raw_record[8].strip()
         confidence = float(raw_record[9])
         self.type = int(raw_record[10])
-        self.selec_file = (raw_record[11])
-        self.sound_files = (raw_record[12])
+        self.selec_file = (raw_record[11].strip("\""))
+        self.sound_files = (raw_record[12].strip("\""))
         super().__init__(begin_time, end_time, confidence, species_code, common_name)
 
     # tab separated values with a header line
