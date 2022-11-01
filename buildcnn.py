@@ -27,11 +27,19 @@ if __name__ =='__main__':
     print(str(labels))
     from sklearn.model_selection import train_test_split
     train_df, validation_df = train_test_split(curlew_table, test_size=0.2, random_state=1)
+
+
+
+
     print(train_df.head())
     print(validation_df.head())
     # Create model object
     classes = train_df.columns
-    model = CNN('resnet18', classes=classes, sample_duration=2.0, single_target=True)
+    from opensoundscape.torch.models.cnn import use_resample_loss
+    model = CNN('resnet18', classes, 3.0, single_target=False)
+    use_resample_loss(model)
+    print("model.single_target:", model.single_target)
+    #model = CNN('resnet18', classes=classes, sample_duration=3.0, single_target=False)
     #Logging the Model preformance
     model.logging_level = 3  # request lots of logged content
     model.log_file = './binary_train/training_log.txt'  # specify a file to log output to
@@ -45,7 +53,7 @@ if __name__ =='__main__':
         train_df=train_df,
         validation_df=validation_df,
         save_path='./binary_train/', #where to save the trained model
-        epochs=5,
+        epochs=2,
         batch_size=8,
         save_interval=5, #save model every 5 epochs (the best model is always saved in addition)
         num_workers=12, #specify 4 if you have 4 CPU processes, eg; 0 means only the root process

@@ -1357,3 +1357,5 @@ Training complete
 Best Model Appears at Epoch 4 with Validation score 0.521.
 0 of 4110 total training samples failed to preprocess
 List of unsafe sampels: []
+
+Training Epoch 0
