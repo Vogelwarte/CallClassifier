@@ -1,0 +1,1359 @@
+
+Training Epoch 0
+Epoch: 0 [batch 0/514 (0.00%)] 
+	DistLoss: 1.815
+Metrics:
+	Jacc: 0.062 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 10/514 (1.95%)] 
+	DistLoss: 1.925
+Metrics:
+	Jacc: 0.375 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 20/514 (3.89%)] 
+	DistLoss: 2.060
+Metrics:
+	Jacc: 0.107 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 30/514 (5.84%)] 
+	DistLoss: 2.357
+Metrics:
+	Jacc: 0.208 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 40/514 (7.78%)] 
+	DistLoss: 2.175
+Metrics:
+	Jacc: 0.155 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 50/514 (9.73%)] 
+	DistLoss: 2.260
+Metrics:
+	Jacc: 0.107 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 60/514 (11.67%)] 
+	DistLoss: 2.217
+Metrics:
+	Jacc: 0.300 Hamm: 0.312 
+	Prec: 0.250 Rec: 0.500 F1: 0.333
+Epoch: 0 [batch 70/514 (13.62%)] 
+	DistLoss: 2.338
+Metrics:
+	Jacc: 0.107 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 80/514 (15.56%)] 
+	DistLoss: 2.350
+Metrics:
+	Jacc: 0.094 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 90/514 (17.51%)] 
+	DistLoss: 2.349
+Metrics:
+	Jacc: 0.125 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 100/514 (19.46%)] 
+	DistLoss: 2.313
+Metrics:
+	Jacc: 0.250 Hamm: 0.250 
+	Prec: 0.500 Rec: 1.000 F1: 0.667
+Epoch: 0 [batch 110/514 (21.40%)] 
+	DistLoss: 2.252
+Metrics:
+	Jacc: 0.125 Hamm: 0.375 
+	Prec: 0.167 Rec: 1.000 F1: 0.286
+Epoch: 0 [batch 120/514 (23.35%)] 
+	DistLoss: 2.220
+Metrics:
+	Jacc: 0.268 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 130/514 (25.29%)] 
+	DistLoss: 2.210
+Metrics:
+	Jacc: 0.062 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 140/514 (27.24%)] 
+	DistLoss: 2.207
+Metrics:
+	Jacc: 0.062 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 150/514 (29.18%)] 
+	DistLoss: 2.251
+Metrics:
+	Jacc: 0.113 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 160/514 (31.13%)] 
+	DistLoss: 2.224
+Metrics:
+	Jacc: 0.156 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 170/514 (33.07%)] 
+	DistLoss: 2.212
+Metrics:
+	Jacc: 0.036 Hamm: 0.438 
+	Prec: 0.200 Rec: 0.333 F1: 0.250
+Epoch: 0 [batch 180/514 (35.02%)] 
+	DistLoss: 2.166
+Metrics:
+	Jacc: 0.062 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 190/514 (36.96%)] 
+	DistLoss: 2.125
+Metrics:
+	Jacc: 0.317 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 200/514 (38.91%)] 
+	DistLoss: 2.087
+Metrics:
+	Jacc: 0.250 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 210/514 (40.86%)] 
+	DistLoss: 2.060
+Metrics:
+	Jacc: 0.125 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 220/514 (42.80%)] 
+	DistLoss: 2.030
+Metrics:
+	Jacc: 0.464 Hamm: 0.062 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 0 [batch 230/514 (44.75%)] 
+	DistLoss: 2.024
+Metrics:
+	Jacc: 0.375 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 240/514 (46.69%)] 
+	DistLoss: 2.007
+Metrics:
+	Jacc: 0.393 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 250/514 (48.64%)] 
+	DistLoss: 1.993
+Metrics:
+	Jacc: 0.100 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 260/514 (50.58%)] 
+	DistLoss: 1.972
+Metrics:
+	Jacc: 0.155 Hamm: 0.312 
+	Prec: 0.286 Rec: 1.000 F1: 0.444
+Epoch: 0 [batch 270/514 (52.53%)] 
+	DistLoss: 1.957
+Metrics:
+	Jacc: 0.250 Hamm: 0.250 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 0 [batch 280/514 (54.47%)] 
+	DistLoss: 1.944
+Metrics:
+	Jacc: 0.167 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 290/514 (56.42%)] 
+	DistLoss: 1.920
+Metrics:
+	Jacc: 0.062 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 300/514 (58.37%)] 
+	DistLoss: 1.900
+Metrics:
+	Jacc: 0.146 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 310/514 (60.31%)] 
+	DistLoss: 1.876
+Metrics:
+	Jacc: 0.268 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 320/514 (62.26%)] 
+	DistLoss: 1.861
+Metrics:
+	Jacc: 0.179 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 330/514 (64.20%)] 
+	DistLoss: 1.851
+Metrics:
+	Jacc: 0.143 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 340/514 (66.15%)] 
+	DistLoss: 1.830
+Metrics:
+	Jacc: 0.208 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 350/514 (68.09%)] 
+	DistLoss: 1.813
+Metrics:
+	Jacc: 0.429 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 360/514 (70.04%)] 
+	DistLoss: 1.798
+Metrics:
+	Jacc: 0.119 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 370/514 (71.98%)] 
+	DistLoss: 1.787
+Metrics:
+	Jacc: 0.062 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 380/514 (73.93%)] 
+	DistLoss: 1.776
+Metrics:
+	Jacc: 0.143 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 390/514 (75.88%)] 
+	DistLoss: 1.768
+Metrics:
+	Jacc: 0.250 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 400/514 (77.82%)] 
+	DistLoss: 1.755
+Metrics:
+	Jacc: 0.283 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 410/514 (79.77%)] 
+	DistLoss: 1.743
+Metrics:
+	Jacc: 0.107 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 420/514 (81.71%)] 
+	DistLoss: 1.731
+Metrics:
+	Jacc: 0.062 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 430/514 (83.66%)] 
+	DistLoss: 1.715
+Metrics:
+	Jacc: 0.107 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 440/514 (85.60%)] 
+	DistLoss: 1.702
+Metrics:
+	Jacc: 0.125 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 450/514 (87.55%)] 
+	DistLoss: 1.690
+Metrics:
+	Jacc: 0.094 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 460/514 (89.49%)] 
+	DistLoss: 1.680
+Metrics:
+	Jacc: 0.271 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 470/514 (91.44%)] 
+	DistLoss: 1.666
+Metrics:
+	Jacc: 0.400 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 480/514 (93.39%)] 
+	DistLoss: 1.655
+Metrics:
+	Jacc: 0.143 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 490/514 (95.33%)] 
+	DistLoss: 1.644
+Metrics:
+	Jacc: 0.292 Hamm: 0.250 
+	Prec: 0.333 Rec: 1.000 F1: 0.500
+Epoch: 0 [batch 500/514 (97.28%)] 
+	DistLoss: 1.638
+Metrics:
+	Jacc: 0.167 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 0 [batch 510/514 (99.22%)] 
+	DistLoss: 1.630
+Metrics:
+	Jacc: 0.183 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Metrics:
+	Jacc: 0.262 Hamm: 0.266 
+	Prec: 0.237 Rec: 0.194 F1: 0.213
+
+Validation.
+Metrics:
+	Jacc: 0.173 Hamm: 0.323 
+	Prec: 0.457 Rec: 0.047 F1: 0.086
+Updating best model
+
+Training Epoch 1
+Epoch: 1 [batch 0/514 (0.00%)] 
+	DistLoss: 1.605
+Metrics:
+	Jacc: 0.292 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 10/514 (1.95%)] 
+	DistLoss: 1.081
+Metrics:
+	Jacc: 0.458 Hamm: 0.250 
+	Prec: 1.000 Rec: 0.250 F1: 0.400
+Epoch: 1 [batch 20/514 (3.89%)] 
+	DistLoss: 1.100
+Metrics:
+	Jacc: 0.417 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 30/514 (5.84%)] 
+	DistLoss: 1.130
+Metrics:
+	Jacc: 0.417 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 40/514 (7.78%)] 
+	DistLoss: 1.142
+Metrics:
+	Jacc: 0.267 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 50/514 (9.73%)] 
+	DistLoss: 1.104
+Metrics:
+	Jacc: 0.438 Hamm: 0.062 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 60/514 (11.67%)] 
+	DistLoss: 1.086
+Metrics:
+	Jacc: 0.292 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 70/514 (13.62%)] 
+	DistLoss: 1.074
+Metrics:
+	Jacc: 0.062 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 80/514 (15.56%)] 
+	DistLoss: 1.068
+Metrics:
+	Jacc: 0.483 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.333 F1: 0.500
+Epoch: 1 [batch 90/514 (17.51%)] 
+	DistLoss: 1.063
+Metrics:
+	Jacc: 0.312 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 100/514 (19.46%)] 
+	DistLoss: 1.049
+Metrics:
+	Jacc: 0.393 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 110/514 (21.40%)] 
+	DistLoss: 1.042
+Metrics:
+	Jacc: 0.500 Hamm: 0.000 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 120/514 (23.35%)] 
+	DistLoss: 1.032
+Metrics:
+	Jacc: 0.268 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 130/514 (25.29%)] 
+	DistLoss: 1.020
+Metrics:
+	Jacc: 0.464 Hamm: 0.062 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 140/514 (27.24%)] 
+	DistLoss: 1.010
+Metrics:
+	Jacc: 0.464 Hamm: 0.062 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 150/514 (29.18%)] 
+	DistLoss: 1.026
+Metrics:
+	Jacc: 0.062 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 160/514 (31.13%)] 
+	DistLoss: 1.026
+Metrics:
+	Jacc: 0.417 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 170/514 (33.07%)] 
+	DistLoss: 1.023
+Metrics:
+	Jacc: 0.357 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 180/514 (35.02%)] 
+	DistLoss: 1.021
+Metrics:
+	Jacc: 0.250 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 190/514 (36.96%)] 
+	DistLoss: 1.026
+Metrics:
+	Jacc: 0.190 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 200/514 (38.91%)] 
+	DistLoss: 1.021
+Metrics:
+	Jacc: 0.156 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 210/514 (40.86%)] 
+	DistLoss: 1.019
+Metrics:
+	Jacc: 0.143 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 220/514 (42.80%)] 
+	DistLoss: 1.018
+Metrics:
+	Jacc: 0.107 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 230/514 (44.75%)] 
+	DistLoss: 1.021
+Metrics:
+	Jacc: 0.475 Hamm: 0.188 
+	Prec: 0.500 Rec: 0.667 F1: 0.571
+Epoch: 1 [batch 240/514 (46.69%)] 
+	DistLoss: 1.024
+Metrics:
+	Jacc: 0.367 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 250/514 (48.64%)] 
+	DistLoss: 1.024
+Metrics:
+	Jacc: 0.196 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 260/514 (50.58%)] 
+	DistLoss: 1.030
+Metrics:
+	Jacc: 0.232 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 270/514 (52.53%)] 
+	DistLoss: 1.042
+Metrics:
+	Jacc: 0.375 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 280/514 (54.47%)] 
+	DistLoss: 1.038
+Metrics:
+	Jacc: 0.333 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 290/514 (56.42%)] 
+	DistLoss: 1.044
+Metrics:
+	Jacc: 0.317 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 300/514 (58.37%)] 
+	DistLoss: 1.067
+Metrics:
+	Jacc: 0.232 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 310/514 (60.31%)] 
+	DistLoss: 1.084
+Metrics:
+	Jacc: 0.333 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.333 F1: 0.500
+Epoch: 1 [batch 320/514 (62.26%)] 
+	DistLoss: 1.091
+Metrics:
+	Jacc: 0.429 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 330/514 (64.20%)] 
+	DistLoss: 1.091
+Metrics:
+	Jacc: 0.393 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 340/514 (66.15%)] 
+	DistLoss: 1.094
+Metrics:
+	Jacc: 0.350 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 350/514 (68.09%)] 
+	DistLoss: 1.092
+Metrics:
+	Jacc: 0.250 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 360/514 (70.04%)] 
+	DistLoss: 1.092
+Metrics:
+	Jacc: 0.429 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 370/514 (71.98%)] 
+	DistLoss: 1.094
+Metrics:
+	Jacc: 0.196 Hamm: 0.312 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 1 [batch 380/514 (73.93%)] 
+	DistLoss: 1.090
+Metrics:
+	Jacc: 0.275 Hamm: 0.250 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 1 [batch 390/514 (75.88%)] 
+	DistLoss: 1.093
+Metrics:
+	Jacc: 0.107 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 400/514 (77.82%)] 
+	DistLoss: 1.103
+Metrics:
+	Jacc: 0.357 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 410/514 (79.77%)] 
+	DistLoss: 1.103
+Metrics:
+	Jacc: 0.393 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 420/514 (81.71%)] 
+	DistLoss: 1.099
+Metrics:
+	Jacc: 0.250 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 430/514 (83.66%)] 
+	DistLoss: 1.094
+Metrics:
+	Jacc: 0.188 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 440/514 (85.60%)] 
+	DistLoss: 1.090
+Metrics:
+	Jacc: 0.357 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 450/514 (87.55%)] 
+	DistLoss: 1.091
+Metrics:
+	Jacc: 0.262 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 460/514 (89.49%)] 
+	DistLoss: 1.092
+Metrics:
+	Jacc: 0.125 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 470/514 (91.44%)] 
+	DistLoss: 1.089
+Metrics:
+	Jacc: 0.567 Hamm: 0.125 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 1 [batch 480/514 (93.39%)] 
+	DistLoss: 1.089
+Metrics:
+	Jacc: 0.250 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 490/514 (95.33%)] 
+	DistLoss: 1.090
+Metrics:
+	Jacc: 0.429 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 500/514 (97.28%)] 
+	DistLoss: 1.089
+Metrics:
+	Jacc: 0.062 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 1 [batch 510/514 (99.22%)] 
+	DistLoss: 1.088
+Metrics:
+	Jacc: 0.208 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Metrics:
+	Jacc: 0.342 Hamm: 0.220 
+	Prec: 0.305 Rec: 0.277 F1: 0.290
+
+Validation.
+Metrics:
+	Jacc: 0.132 Hamm: 0.380 
+	Prec: 0.824 Rec: 0.031 F1: 0.061
+
+Training Epoch 2
+Epoch: 2 [batch 0/514 (0.00%)] 
+	DistLoss: 0.688
+Metrics:
+	Jacc: 0.464 Hamm: 0.062 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 10/514 (1.95%)] 
+	DistLoss: 0.892
+Metrics:
+	Jacc: 0.094 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 20/514 (3.89%)] 
+	DistLoss: 0.897
+Metrics:
+	Jacc: 0.250 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 30/514 (5.84%)] 
+	DistLoss: 1.009
+Metrics:
+	Jacc: 0.525 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 2 [batch 40/514 (7.78%)] 
+	DistLoss: 0.961
+Metrics:
+	Jacc: 0.458 Hamm: 0.062 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 50/514 (9.73%)] 
+	DistLoss: 0.958
+Metrics:
+	Jacc: 0.429 Hamm: 0.125 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 2 [batch 60/514 (11.67%)] 
+	DistLoss: 0.956
+Metrics:
+	Jacc: 0.429 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 70/514 (13.62%)] 
+	DistLoss: 0.917
+Metrics:
+	Jacc: 0.450 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 80/514 (15.56%)] 
+	DistLoss: 0.893
+Metrics:
+	Jacc: 0.458 Hamm: 0.062 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 90/514 (17.51%)] 
+	DistLoss: 0.905
+Metrics:
+	Jacc: 0.429 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 100/514 (19.46%)] 
+	DistLoss: 0.913
+Metrics:
+	Jacc: 0.226 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 110/514 (21.40%)] 
+	DistLoss: 0.917
+Metrics:
+	Jacc: 0.156 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 120/514 (23.35%)] 
+	DistLoss: 0.920
+Metrics:
+	Jacc: 0.375 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 130/514 (25.29%)] 
+	DistLoss: 0.918
+Metrics:
+	Jacc: 0.442 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 2 [batch 140/514 (27.24%)] 
+	DistLoss: 0.909
+Metrics:
+	Jacc: 0.226 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.333 F1: 0.500
+Epoch: 2 [batch 150/514 (29.18%)] 
+	DistLoss: 0.911
+Metrics:
+	Jacc: 0.500 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 2 [batch 160/514 (31.13%)] 
+	DistLoss: 0.895
+Metrics:
+	Jacc: 0.625 Hamm: 0.062 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 170/514 (33.07%)] 
+	DistLoss: 0.881
+Metrics:
+	Jacc: 0.750 Hamm: 0.000 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 2 [batch 180/514 (35.02%)] 
+	DistLoss: 0.882
+Metrics:
+	Jacc: 0.625 Hamm: 0.062 
+	Prec: 0.500 Rec: 1.000 F1: 0.667
+Epoch: 2 [batch 190/514 (36.96%)] 
+	DistLoss: 0.870
+Metrics:
+	Jacc: 0.750 Hamm: 0.000 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 2 [batch 200/514 (38.91%)] 
+	DistLoss: 0.860
+Metrics:
+	Jacc: 0.458 Hamm: 0.062 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 210/514 (40.86%)] 
+	DistLoss: 0.865
+Metrics:
+	Jacc: 0.375 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 220/514 (42.80%)] 
+	DistLoss: 0.862
+Metrics:
+	Jacc: 0.575 Hamm: 0.062 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 2 [batch 230/514 (44.75%)] 
+	DistLoss: 0.869
+Metrics:
+	Jacc: 0.217 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 240/514 (46.69%)] 
+	DistLoss: 0.864
+Metrics:
+	Jacc: 0.167 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 250/514 (48.64%)] 
+	DistLoss: 0.853
+Metrics:
+	Jacc: 0.458 Hamm: 0.062 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 2 [batch 260/514 (50.58%)] 
+	DistLoss: 0.850
+Metrics:
+	Jacc: 0.400 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 270/514 (52.53%)] 
+	DistLoss: 0.852
+Metrics:
+	Jacc: 0.521 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 2 [batch 280/514 (54.47%)] 
+	DistLoss: 0.846
+Metrics:
+	Jacc: 0.583 Hamm: 0.125 
+	Prec: 0.500 Rec: 0.500 F1: 0.500
+Epoch: 2 [batch 290/514 (56.42%)] 
+	DistLoss: 0.849
+Metrics:
+	Jacc: 0.190 Hamm: 0.250 
+	Prec: 1.000 Rec: 0.333 F1: 0.500
+Epoch: 2 [batch 300/514 (58.37%)] 
+	DistLoss: 0.849
+Metrics:
+	Jacc: 0.700 Hamm: 0.062 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 2 [batch 310/514 (60.31%)] 
+	DistLoss: 0.850
+Metrics:
+	Jacc: 0.438 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 320/514 (62.26%)] 
+	DistLoss: 0.849
+Metrics:
+	Jacc: 0.750 Hamm: 0.000 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 2 [batch 330/514 (64.20%)] 
+	DistLoss: 0.848
+Metrics:
+	Jacc: 0.233 Hamm: 0.250 
+	Prec: 0.333 Rec: 1.000 F1: 0.500
+Epoch: 2 [batch 340/514 (66.15%)] 
+	DistLoss: 0.847
+Metrics:
+	Jacc: 0.342 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 350/514 (68.09%)] 
+	DistLoss: 0.845
+Metrics:
+	Jacc: 0.250 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 360/514 (70.04%)] 
+	DistLoss: 0.845
+Metrics:
+	Jacc: 0.232 Hamm: 0.250 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 2 [batch 370/514 (71.98%)] 
+	DistLoss: 0.847
+Metrics:
+	Jacc: 0.188 Hamm: 0.250 
+	Prec: 1.000 Rec: 0.250 F1: 0.400
+Epoch: 2 [batch 380/514 (73.93%)] 
+	DistLoss: 0.843
+Metrics:
+	Jacc: 0.450 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 2 [batch 390/514 (75.88%)] 
+	DistLoss: 0.840
+Metrics:
+	Jacc: 0.304 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 400/514 (77.82%)] 
+	DistLoss: 0.842
+Metrics:
+	Jacc: 0.667 Hamm: 0.125 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 2 [batch 410/514 (79.77%)] 
+	DistLoss: 0.837
+Metrics:
+	Jacc: 0.196 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 420/514 (81.71%)] 
+	DistLoss: 0.842
+Metrics:
+	Jacc: 0.358 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 430/514 (83.66%)] 
+	DistLoss: 0.839
+Metrics:
+	Jacc: 0.250 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 440/514 (85.60%)] 
+	DistLoss: 0.841
+Metrics:
+	Jacc: 0.625 Hamm: 0.188 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 2 [batch 450/514 (87.55%)] 
+	DistLoss: 0.841
+Metrics:
+	Jacc: 0.500 Hamm: 0.125 
+	Prec: 0.500 Rec: 0.500 F1: 0.500
+Epoch: 2 [batch 460/514 (89.49%)] 
+	DistLoss: 0.837
+Metrics:
+	Jacc: 0.208 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 470/514 (91.44%)] 
+	DistLoss: 0.835
+Metrics:
+	Jacc: 0.650 Hamm: 0.125 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 2 [batch 480/514 (93.39%)] 
+	DistLoss: 0.831
+Metrics:
+	Jacc: 0.250 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 490/514 (95.33%)] 
+	DistLoss: 0.828
+Metrics:
+	Jacc: 0.525 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 2 [batch 500/514 (97.28%)] 
+	DistLoss: 0.827
+Metrics:
+	Jacc: 0.208 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 2 [batch 510/514 (99.22%)] 
+	DistLoss: 0.826
+Metrics:
+	Jacc: 0.208 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Metrics:
+	Jacc: 0.471 Hamm: 0.161 
+	Prec: 0.605 Rec: 0.518 F1: 0.558
+
+Validation.
+Metrics:
+	Jacc: 0.087 Hamm: 0.384 
+	Prec: 0.737 Rec: 0.189 F1: 0.301
+Updating best model
+
+Training Epoch 3
+Epoch: 3 [batch 0/514 (0.00%)] 
+	DistLoss: 0.773
+Metrics:
+	Jacc: 0.625 Hamm: 0.188 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 3 [batch 10/514 (1.95%)] 
+	DistLoss: 0.745
+Metrics:
+	Jacc: 0.458 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.333 F1: 0.500
+Epoch: 3 [batch 20/514 (3.89%)] 
+	DistLoss: 0.741
+Metrics:
+	Jacc: 0.325 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 30/514 (5.84%)] 
+	DistLoss: 0.711
+Metrics:
+	Jacc: 0.287 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 40/514 (7.78%)] 
+	DistLoss: 0.727
+Metrics:
+	Jacc: 0.750 Hamm: 0.000 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 3 [batch 50/514 (9.73%)] 
+	DistLoss: 0.742
+Metrics:
+	Jacc: 0.143 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 60/514 (11.67%)] 
+	DistLoss: 0.763
+Metrics:
+	Jacc: 0.417 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.333 F1: 0.500
+Epoch: 3 [batch 70/514 (13.62%)] 
+	DistLoss: 0.751
+Metrics:
+	Jacc: 0.604 Hamm: 0.062 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 3 [batch 80/514 (15.56%)] 
+	DistLoss: 0.767
+Metrics:
+	Jacc: 0.250 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 90/514 (17.51%)] 
+	DistLoss: 0.783
+Metrics:
+	Jacc: 0.438 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 3 [batch 100/514 (19.46%)] 
+	DistLoss: 0.769
+Metrics:
+	Jacc: 0.232 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 110/514 (21.40%)] 
+	DistLoss: 0.752
+Metrics:
+	Jacc: 0.317 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 120/514 (23.35%)] 
+	DistLoss: 0.768
+Metrics:
+	Jacc: 0.375 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 130/514 (25.29%)] 
+	DistLoss: 0.762
+Metrics:
+	Jacc: 0.458 Hamm: 0.188 
+	Prec: 0.500 Rec: 0.500 F1: 0.500
+Epoch: 3 [batch 140/514 (27.24%)] 
+	DistLoss: 0.757
+Metrics:
+	Jacc: 0.417 Hamm: 0.188 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 3 [batch 150/514 (29.18%)] 
+	DistLoss: 0.763
+Metrics:
+	Jacc: 0.408 Hamm: 0.125 
+	Prec: 0.500 Rec: 0.500 F1: 0.500
+Epoch: 3 [batch 160/514 (31.13%)] 
+	DistLoss: 0.771
+Metrics:
+	Jacc: 0.267 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 170/514 (33.07%)] 
+	DistLoss: 0.767
+Metrics:
+	Jacc: 0.458 Hamm: 0.188 
+	Prec: 0.333 Rec: 1.000 F1: 0.500
+Epoch: 3 [batch 180/514 (35.02%)] 
+	DistLoss: 0.761
+Metrics:
+	Jacc: 0.750 Hamm: 0.000 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 3 [batch 190/514 (36.96%)] 
+	DistLoss: 0.754
+Metrics:
+	Jacc: 0.700 Hamm: 0.062 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 3 [batch 200/514 (38.91%)] 
+	DistLoss: 0.749
+Metrics:
+	Jacc: 0.750 Hamm: 0.000 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 3 [batch 210/514 (40.86%)] 
+	DistLoss: 0.748
+Metrics:
+	Jacc: 0.250 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 220/514 (42.80%)] 
+	DistLoss: 0.750
+Metrics:
+	Jacc: 0.500 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 3 [batch 230/514 (44.75%)] 
+	DistLoss: 0.750
+Metrics:
+	Jacc: 0.525 Hamm: 0.125 
+	Prec: 0.500 Rec: 1.000 F1: 0.667
+Epoch: 3 [batch 240/514 (46.69%)] 
+	DistLoss: 0.752
+Metrics:
+	Jacc: 0.167 Hamm: 0.312 
+	Prec: 0.500 Rec: 0.500 F1: 0.500
+Epoch: 3 [batch 250/514 (48.64%)] 
+	DistLoss: 0.747
+Metrics:
+	Jacc: 0.342 Hamm: 0.250 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 3 [batch 260/514 (50.58%)] 
+	DistLoss: 0.745
+Metrics:
+	Jacc: 0.179 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 270/514 (52.53%)] 
+	DistLoss: 0.736
+Metrics:
+	Jacc: 0.542 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 3 [batch 280/514 (54.47%)] 
+	DistLoss: 0.729
+Metrics:
+	Jacc: 0.417 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 3 [batch 290/514 (56.42%)] 
+	DistLoss: 0.734
+Metrics:
+	Jacc: 0.458 Hamm: 0.188 
+	Prec: 0.500 Rec: 1.000 F1: 0.667
+Epoch: 3 [batch 300/514 (58.37%)] 
+	DistLoss: 0.735
+Metrics:
+	Jacc: 0.350 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.333 F1: 0.500
+Epoch: 3 [batch 310/514 (60.31%)] 
+	DistLoss: 0.733
+Metrics:
+	Jacc: 0.750 Hamm: 0.000 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 3 [batch 320/514 (62.26%)] 
+	DistLoss: 0.740
+Metrics:
+	Jacc: 0.575 Hamm: 0.062 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 3 [batch 330/514 (64.20%)] 
+	DistLoss: 0.737
+Metrics:
+	Jacc: 0.375 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 340/514 (66.15%)] 
+	DistLoss: 0.735
+Metrics:
+	Jacc: 0.375 Hamm: 0.062 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 350/514 (68.09%)] 
+	DistLoss: 0.731
+Metrics:
+	Jacc: 0.357 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 360/514 (70.04%)] 
+	DistLoss: 0.724
+Metrics:
+	Jacc: 0.458 Hamm: 0.062 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 370/514 (71.98%)] 
+	DistLoss: 0.721
+Metrics:
+	Jacc: 0.700 Hamm: 0.062 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 3 [batch 380/514 (73.93%)] 
+	DistLoss: 0.720
+Metrics:
+	Jacc: 0.146 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 390/514 (75.88%)] 
+	DistLoss: 0.719
+Metrics:
+	Jacc: 0.700 Hamm: 0.062 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 3 [batch 400/514 (77.82%)] 
+	DistLoss: 0.714
+Metrics:
+	Jacc: 0.708 Hamm: 0.062 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 3 [batch 410/514 (79.77%)] 
+	DistLoss: 0.711
+Metrics:
+	Jacc: 0.375 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 420/514 (81.71%)] 
+	DistLoss: 0.710
+Metrics:
+	Jacc: 0.625 Hamm: 0.125 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 3 [batch 430/514 (83.66%)] 
+	DistLoss: 0.709
+Metrics:
+	Jacc: 0.325 Hamm: 0.188 
+	Prec: 0.500 Rec: 1.000 F1: 0.667
+Epoch: 3 [batch 440/514 (85.60%)] 
+	DistLoss: 0.714
+Metrics:
+	Jacc: 0.417 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 450/514 (87.55%)] 
+	DistLoss: 0.712
+Metrics:
+	Jacc: 0.304 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 3 [batch 460/514 (89.49%)] 
+	DistLoss: 0.709
+Metrics:
+	Jacc: 0.542 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 3 [batch 470/514 (91.44%)] 
+	DistLoss: 0.709
+Metrics:
+	Jacc: 0.143 Hamm: 0.250 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 3 [batch 480/514 (93.39%)] 
+	DistLoss: 0.711
+Metrics:
+	Jacc: 0.479 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.667 F1: 0.800
+Epoch: 3 [batch 490/514 (95.33%)] 
+	DistLoss: 0.707
+Metrics:
+	Jacc: 0.475 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.400 F1: 0.571
+Epoch: 3 [batch 500/514 (97.28%)] 
+	DistLoss: 0.704
+Metrics:
+	Jacc: 0.542 Hamm: 0.062 
+	Prec: 0.500 Rec: 1.000 F1: 0.667
+Epoch: 3 [batch 510/514 (99.22%)] 
+	DistLoss: 0.701
+Metrics:
+	Jacc: 0.354 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Metrics:
+	Jacc: 0.539 Hamm: 0.135 
+	Prec: 0.682 Rec: 0.605 F1: 0.641
+
+Validation.
+Metrics:
+	Jacc: 0.279 Hamm: 0.284 
+	Prec: 0.758 Rec: 0.155 F1: 0.257
+
+Training Epoch 4
+Epoch: 4 [batch 0/514 (0.00%)] 
+	DistLoss: 0.669
+Metrics:
+	Jacc: 0.458 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.667 F1: 0.800
+Epoch: 4 [batch 10/514 (1.95%)] 
+	DistLoss: 0.607
+Metrics:
+	Jacc: 0.400 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 20/514 (3.89%)] 
+	DistLoss: 0.545
+Metrics:
+	Jacc: 0.792 Hamm: 0.062 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 4 [batch 30/514 (5.84%)] 
+	DistLoss: 0.524
+Metrics:
+	Jacc: 0.500 Hamm: 0.062 
+	Prec: 0.500 Rec: 1.000 F1: 0.667
+Epoch: 4 [batch 40/514 (7.78%)] 
+	DistLoss: 0.554
+Metrics:
+	Jacc: 0.150 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 50/514 (9.73%)] 
+	DistLoss: 0.570
+Metrics:
+	Jacc: 0.292 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 60/514 (11.67%)] 
+	DistLoss: 0.577
+Metrics:
+	Jacc: 0.438 Hamm: 0.250 
+	Prec: 0.500 Rec: 1.000 F1: 0.667
+Epoch: 4 [batch 70/514 (13.62%)] 
+	DistLoss: 0.584
+Metrics:
+	Jacc: 0.650 Hamm: 0.125 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 4 [batch 80/514 (15.56%)] 
+	DistLoss: 0.592
+Metrics:
+	Jacc: 0.479 Hamm: 0.125 
+	Prec: 0.500 Rec: 1.000 F1: 0.667
+Epoch: 4 [batch 90/514 (17.51%)] 
+	DistLoss: 0.583
+Metrics:
+	Jacc: 0.393 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 100/514 (19.46%)] 
+	DistLoss: 0.618
+Metrics:
+	Jacc: 0.438 Hamm: 0.125 
+	Prec: 0.667 Rec: 0.667 F1: 0.667
+Epoch: 4 [batch 110/514 (21.40%)] 
+	DistLoss: 0.629
+Metrics:
+	Jacc: 0.604 Hamm: 0.062 
+	Prec: 1.000 Rec: 0.750 F1: 0.857
+Epoch: 4 [batch 120/514 (23.35%)] 
+	DistLoss: 0.616
+Metrics:
+	Jacc: 0.650 Hamm: 0.125 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 4 [batch 130/514 (25.29%)] 
+	DistLoss: 0.615
+Metrics:
+	Jacc: 0.667 Hamm: 0.062 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 4 [batch 140/514 (27.24%)] 
+	DistLoss: 0.617
+Metrics:
+	Jacc: 0.396 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.750 F1: 0.857
+Epoch: 4 [batch 150/514 (29.18%)] 
+	DistLoss: 0.617
+Metrics:
+	Jacc: 0.708 Hamm: 0.062 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 4 [batch 160/514 (31.13%)] 
+	DistLoss: 0.614
+Metrics:
+	Jacc: 0.500 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 170/514 (33.07%)] 
+	DistLoss: 0.620
+Metrics:
+	Jacc: 0.562 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 4 [batch 180/514 (35.02%)] 
+	DistLoss: 0.613
+Metrics:
+	Jacc: 0.500 Hamm: 0.062 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 190/514 (36.96%)] 
+	DistLoss: 0.606
+Metrics:
+	Jacc: 0.825 Hamm: 0.062 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 4 [batch 200/514 (38.91%)] 
+	DistLoss: 0.599
+Metrics:
+	Jacc: 0.283 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 210/514 (40.86%)] 
+	DistLoss: 0.597
+Metrics:
+	Jacc: 0.625 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 4 [batch 220/514 (42.80%)] 
+	DistLoss: 0.594
+Metrics:
+	Jacc: 0.688 Hamm: 0.062 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 4 [batch 230/514 (44.75%)] 
+	DistLoss: 0.594
+Metrics:
+	Jacc: 0.562 Hamm: 0.125 
+	Prec: 0.500 Rec: 1.000 F1: 0.667
+Epoch: 4 [batch 240/514 (46.69%)] 
+	DistLoss: 0.591
+Metrics:
+	Jacc: 1.000 Hamm: 0.000 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 4 [batch 250/514 (48.64%)] 
+	DistLoss: 0.597
+Metrics:
+	Jacc: 0.500 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 260/514 (50.58%)] 
+	DistLoss: 0.603
+Metrics:
+	Jacc: 0.142 Hamm: 0.312 
+	Prec: 0.250 Rec: 0.333 F1: 0.286
+Epoch: 4 [batch 270/514 (52.53%)] 
+	DistLoss: 0.602
+Metrics:
+	Jacc: 0.338 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 280/514 (54.47%)] 
+	DistLoss: 0.606
+Metrics:
+	Jacc: 0.175 Hamm: 0.375 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 290/514 (56.42%)] 
+	DistLoss: 0.614
+Metrics:
+	Jacc: 0.438 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 4 [batch 300/514 (58.37%)] 
+	DistLoss: 0.617
+Metrics:
+	Jacc: 0.521 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 310/514 (60.31%)] 
+	DistLoss: 0.616
+Metrics:
+	Jacc: 0.475 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 4 [batch 320/514 (62.26%)] 
+	DistLoss: 0.625
+Metrics:
+	Jacc: 0.226 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.333 F1: 0.500
+Epoch: 4 [batch 330/514 (64.20%)] 
+	DistLoss: 0.626
+Metrics:
+	Jacc: 0.500 Hamm: 0.188 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 4 [batch 340/514 (66.15%)] 
+	DistLoss: 0.624
+Metrics:
+	Jacc: 0.812 Hamm: 0.062 
+	Prec: 1.000 Rec: 0.500 F1: 0.667
+Epoch: 4 [batch 350/514 (68.09%)] 
+	DistLoss: 0.622
+Metrics:
+	Jacc: 0.625 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.667 F1: 0.800
+Epoch: 4 [batch 360/514 (70.04%)] 
+	DistLoss: 0.621
+Metrics:
+	Jacc: 0.688 Hamm: 0.062 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 4 [batch 370/514 (71.98%)] 
+	DistLoss: 0.621
+Metrics:
+	Jacc: 0.179 Hamm: 0.188 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 380/514 (73.93%)] 
+	DistLoss: 0.624
+Metrics:
+	Jacc: 0.150 Hamm: 0.312 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 390/514 (75.88%)] 
+	DistLoss: 0.625
+Metrics:
+	Jacc: 0.750 Hamm: 0.000 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 4 [batch 400/514 (77.82%)] 
+	DistLoss: 0.626
+Metrics:
+	Jacc: 0.367 Hamm: 0.125 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 410/514 (79.77%)] 
+	DistLoss: 0.626
+Metrics:
+	Jacc: 0.517 Hamm: 0.188 
+	Prec: 1.000 Rec: 0.667 F1: 0.800
+Epoch: 4 [batch 420/514 (81.71%)] 
+	DistLoss: 0.627
+Metrics:
+	Jacc: 0.271 Hamm: 0.250 
+	Prec: 0.500 Rec: 0.333 F1: 0.400
+Epoch: 4 [batch 430/514 (83.66%)] 
+	DistLoss: 0.630
+Metrics:
+	Jacc: 0.525 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.600 F1: 0.750
+Epoch: 4 [batch 440/514 (85.60%)] 
+	DistLoss: 0.629
+Metrics:
+	Jacc: 0.525 Hamm: 0.125 
+	Prec: 0.500 Rec: 1.000 F1: 0.667
+Epoch: 4 [batch 450/514 (87.55%)] 
+	DistLoss: 0.629
+Metrics:
+	Jacc: 0.542 Hamm: 0.125 
+	Prec: 0.500 Rec: 1.000 F1: 0.667
+Epoch: 4 [batch 460/514 (89.49%)] 
+	DistLoss: 0.628
+Metrics:
+	Jacc: 0.750 Hamm: 0.000 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 4 [batch 470/514 (91.44%)] 
+	DistLoss: 0.627
+Metrics:
+	Jacc: 0.708 Hamm: 0.125 
+	Prec: 1.000 Rec: 1.000 F1: 1.000
+Epoch: 4 [batch 480/514 (93.39%)] 
+	DistLoss: 0.626
+Metrics:
+	Jacc: 0.542 Hamm: 0.188 
+	Prec: 0.333 Rec: 1.000 F1: 0.500
+Epoch: 4 [batch 490/514 (95.33%)] 
+	DistLoss: 0.625
+Metrics:
+	Jacc: 0.617 Hamm: 0.062 
+	Prec: 0.000 Rec: 0.000 F1: 0.000
+Epoch: 4 [batch 500/514 (97.28%)] 
+	DistLoss: 0.625
+Metrics:
+	Jacc: 0.604 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.667 F1: 0.800
+Epoch: 4 [batch 510/514 (99.22%)] 
+	DistLoss: 0.624
+Metrics:
+	Jacc: 0.567 Hamm: 0.125 
+	Prec: 1.000 Rec: 0.667 F1: 0.800
+Metrics:
+	Jacc: 0.559 Hamm: 0.128 
+	Prec: 0.720 Rec: 0.649 F1: 0.683
+
+Validation.
+Metrics:
+	Jacc: 0.287 Hamm: 0.250 
+	Prec: 0.615 Rec: 0.452 F1: 0.521
+Saving weights, metrics, and train/valid scores.
+Updating best model
+Training complete
+
+Best Model Appears at Epoch 4 with Validation score 0.521.
+0 of 4110 total training samples failed to preprocess
+List of unsafe sampels: []
