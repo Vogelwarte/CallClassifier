@@ -1,4 +1,6 @@
 from pathlib import Path
+from typing import List
+
 import pandas as pd
 from opensoundscape.torch.models.cnn import load_model
 
@@ -19,7 +21,7 @@ print(validation_df.head())
 
 
 #Run Model
-model = load_model('binary_train/best.model')
+model = load_model('curlew_model_50_ecpochs\\binary_train\\best.model')
 #%%
 #create a copy of the training dataset, sampling 0 of the training samples from it
 #prediction_dataset = model.train_dataset.sample(n=0)
@@ -39,5 +41,9 @@ model = load_model('binary_train/best.model')
 #
 # In[19]:
 #valid_scores_df, valid_preds_df, valid_labels_df = model.predict(prediction_dataset, binary_preds='multi_target', activation_layer='sigmoid')
+validation_df=validation_df.head()
 valid_scores_df, valid_preds_df, valid_labels_df = model.predict(validation_df, binary_preds='single_target', activation_layer='softmax')
+
+valid_scores_df.assign(call_type=valid_scores_df.index[-6:-5])
+
 print(valid_scores_df.to_string())
