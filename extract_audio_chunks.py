@@ -58,7 +58,7 @@ def create_output_dir_structure(results_folder: Path) -> (Path, Path):
 	os.mkdir(out_dir)
 	if not out_dir.is_dir():
 		raise NotADirectoryError("Cannot create output directory " + str(out_dir))
-	report_file: Path = Path(out_dir / f"{prefix}_summary.txt")
+	report_file: Path = Path(out_dir / f"{prefix}_summary.csv")
 	return out_dir, report_file
 
 

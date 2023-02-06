@@ -6,7 +6,7 @@ from opensoundscape.torch.models.cnn import load_model
 #Setup Data for Model
 from pandas import DataFrame
 
-curlew_table = pd.read_csv(Path(r'training_data\chunks\summary.txt')).set_index('filename')
+curlew_table = pd.read_csv(Path(r'training_data\chunks\_summary.csv')).set_index('filename')
 #print(curlew_table.to_string())
 #curlew_table.head()
 from opensoundscape.annotations import categorical_to_one_hot
