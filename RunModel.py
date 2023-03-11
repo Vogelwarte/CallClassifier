@@ -12,7 +12,7 @@ if __name__ == '__main__':
     # load the model
     model: CNN = load_model('binary_train/best.model')
 
-    test_files = glob(r'training_data\chunks\*.wav')[0:64]
+    test_files = glob(r'test_data\audio\*.wav')[0:2]
     print(test_files, file=sys.stderr)
 
     # validation_df = validation_df.head()
@@ -22,7 +22,7 @@ if __name__ == '__main__':
                                                    split_files_into_clips=True,
                                                    final_clip='full',
                                                    binary_preds=None,
-                                                   activation_layer='softmax')
+                                                   activation_layer='sigmoid')
 
     report_file: Path = Path("output.csv")
     with open(report_file, "w") as rf:

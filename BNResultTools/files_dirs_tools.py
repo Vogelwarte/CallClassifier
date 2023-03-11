@@ -5,12 +5,18 @@ from typing import List, Dict
 
 
 def list_of_files(dir: Path, extension: str) -> List[Path]:
+    return list_of_files_ex(dir, [extension])
+
+
+def list_of_files_ex(dir: Path, extensions: List[str]) -> List[Path]:
     all_files: List[Path] = []
     for dirPath, dirNames, fileNames in os.walk(dir):
         for f in fileNames:
-            if f.lower().endswith(extension.lower()):
-                all_files.append(Path(dirPath) / f)
+            for ex in extensions:
+                if f.lower().endswith(ex.lower()):
+                    all_files.append(Path(dirPath) / f)
     return all_files
+
 
 
 def dictionary_by_bare_name(files: List[Path], suffix_to_remove: str) -> Dict[str, Path]:

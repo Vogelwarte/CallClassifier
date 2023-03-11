@@ -1,0 +1,4 @@
+[submodule "BirdNET-Analyzer_V2.2"]
+	path = BirdNET-Analyzer_V2.2
+	url = https://github.com/kahst/BirdNET-Analyzer.git
+	branch = main
