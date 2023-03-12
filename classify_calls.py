@@ -8,11 +8,11 @@ import pandas as pd
 from pathlib import Path
 from typing import List
 from multiprocessing import freeze_support
-from pandas import DataFrame
+from pandas import DataFrame, Series
 from opensoundscape.torch.models.cnn import load_model, CNN
 from opensoundscape.audio import Audio
 
-from BNResultTools.files_dirs_tools import list_of_files
+from BNResultTools.files_dirs_tools import list_of_files_ex
 
 usage = """
     Classifies the European Ceurlew call from the audio file
@@ -42,19 +42,22 @@ def parse_command_line() -> SingleInputDefinition:
     parser.add_argument('--o',
                         help="Path to output folder. It will be created id it doesn't exists")
     args = parser.parse_args()
-    wav_ext: str = "wav"
+    extensions: List[str] = ["wav", "flac"]
     try:
         if_list: List[Path] = []
         in_p = Path(args.i)
         base_dir: Path = in_p.parent
         if in_p.is_dir():
-            if_list = list_of_files(in_p, wav_ext )
+            if_list = list_of_files_ex(in_p, extensions )
             base_dir = in_p
         else:
             if in_p.is_file():
-                if not in_p.name.lower().endswith(wav_ext):
-                    raise RuntimeError(f'{in_p}: invalid filetype. Only {wav_ext} files are supported')
-                if_list = [in_p]
+                for ext in extensions:
+                    if in_p.name.lower().endswith(ext):
+                        if_list = [in_p]
+                        break
+                if len(if_list) == 0:
+                    raise RuntimeError(f'{in_p}: invalid filetype. Only {extensions} files are supported')
             else:
                 raise Exception(f'{in_p} is neither file nor directory')
         out_dir = Path(args.o)
@@ -68,7 +71,6 @@ def parse_command_line() -> SingleInputDefinition:
         print(ex, file=sys.stderr)
         print(usage, file=sys.stdout)
         sys.exit(1)
-    return in_fp
 
 
 def get_birdnet_results(infile: Path, output_dir: Path, common_name: str, confidence: float) -> DataFrame:
@@ -106,7 +108,7 @@ def get_birdnet_results(infile: Path, output_dir: Path, common_name: str, confid
     return selected_df2
 
 
-def type_of_maxval(row) -> str:
+def type_of_maxval(row) -> Series:
     # print(f'Argument for type_of_max: {row}\n')
     type_indices: List[str] = ["type1", "type2", "type3", "type4"]
     vect4: List[float] = row[type_indices].tolist()
@@ -121,6 +123,7 @@ def run_call_classifier_model(audio_file: Path, curlew_calls_df: DataFrame) -> D
     # load the model
     model: CNN = load_model('binary_train/best.model')
 
+    model.preprocessor.pipeline.load_audio.set(sample_rate=32000)
     # print("\nClassifying the call types ...\n")
     scores_df, preds_df, labels_df = model.predict(num_workers=8,
                                                    samples=[str(audio_file)],
@@ -184,4 +187,4 @@ if __name__ == '__main__':
     do_the_stuff()
     end: float = time.time()
     print(f'\nTotal processing time: {int(end - start)}s')
-    sys.exit(0);
+    sys.exit(0)
