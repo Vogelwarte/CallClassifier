@@ -1,0 +1,6 @@
+this versions combination doesn't generate conflicts
+pip install -Iv numpy==1.23 pandas==1.5.1 six==1.15 matplotlib==3.6.3 scikit-image==0.19 opensoundscape==0.7.1 librosa==0.9.2
+
+If the above fails, try to find the solution starting with
+numpy 1.19.5 (because of tensorflow / BirdNET)
+
