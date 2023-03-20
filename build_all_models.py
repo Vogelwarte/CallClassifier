@@ -64,6 +64,9 @@ def get_sample_rate(row) -> Series:
 
 def prepare_training_data(data_dir: Path, expected_sample_rate: int, duration: int, output_dir: Path):
     with open(output_dir / Path(f'training_data_log'), "w") as log_file:
+        version = pkg_resources.get_distribution("opensoundscape").version
+        #    model = CNN('resnet18', ["t1", "t2", "t3"], 3.0, single_target=False)
+        print(f'OpenSoundscape version: {version}.', file=log_file)
         curlew_table = pd.read_csv(data_dir / Path("one-hot_labels.csv"))
         curlew_table.filename = [str(data_dir / Path(f)) for f in curlew_table.filename]
 
