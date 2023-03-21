@@ -76,6 +76,13 @@ class RelativeTimeSegment(metaclass=ABCMeta):
     def to_string(self, separator: str = "-") -> str:
         return str(self.begin_time) + separator + str(self.end_time)
 
+    # operator  << : move the timesegment to 'earlier'
+    def __lshift__(self, period: float) -> 'RelativeTimeSegment':
+        return RelativeTimeSegment(max(0.0, self.begin_time-period), max(0.0, self.end_time-period))
+
+    #operator >> : move the timesegment to 'later'
+    def __rshift__(self, period:float) -> 'RelativeTimeSegment':
+        return self << (-period)
 
 
 class LabeledRelativeTimeSegment(RelativeTimeSegment):
