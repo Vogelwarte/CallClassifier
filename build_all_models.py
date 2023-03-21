@@ -1,30 +1,21 @@
 # the cnn module provides classes for training/predicting with various types of CNNs
 import argparse
-import multiprocessing
 import os
 import sys
+from datetime import datetime
+# other utilities and packages
+# import pandas as pd
+from pathlib import Path
 from typing import List, Dict
 
 import librosa
+import pandas as pd
 import pkg_resources
-from datetime import datetime
-
+# set up plotting
 from matplotlib import pyplot as plt
 from matplotlib_inline.config import InlineBackend
 from opensoundscape.torch.architectures import cnn_architectures
-from opensoundscape.torch.models.cnn import load_model, CNN
-
-# other utilities and packages
-import torch
-# import pandas as pd
-from pathlib import Path
-import numpy as np
-import pandas as pd
-import random
-import subprocess
-
-# set up plotting
-from matplotlib import pyplot as plt
+from opensoundscape.torch.models.cnn import CNN, use_resample_loss
 from pandas import DataFrame, Series
 
 plt.rcParams['figure.figsize'] = [15, 5]  # for large visuals
@@ -62,81 +53,85 @@ def get_sample_rate(row) -> Series:
     return pd.Series([sr])
 
 
+def load_fileset(dir_with_files: Path, expected_sample_rate: int, log_file) -> DataFrame:
+    table: DataFrame = pd.read_csv(dir_with_files / Path("one-hot_labels.csv"))
+    table.filename = [str(dir_with_files / Path(f)) for f in table.filename]
+
+    table['SR'] = table.apply(get_sample_rate, axis=1)
+    ct2 = table[table.SR == expected_sample_rate]
+    table = ct2
+    table = table.drop('SR', axis=1)
+
+    for fp in table['filename']:
+        sr: int = librosa.get_samplerate(fp)
+        print(f'File [{fp}]: {sr / 1000}kHz', file=log_file)
+        if sr != expected_sample_rate:
+            print(
+                f'File {fp} has {sr / 1000}kHz sampling rate, expected {expected_sample_rate}. Resampling not '
+                f'implemented for training',
+                file=log_file)
+            sys.exit(1)
+    print('\n')
+    table = table.set_index('filename')
+    return table
+
+
 def prepare_training_data(data_dir: Path, expected_sample_rate: int, duration: int, output_dir: Path):
     with open(output_dir / Path(f'training_data_log'), "w") as log_file:
         version = pkg_resources.get_distribution("opensoundscape").version
-        #    model = CNN('resnet18', ["t1", "t2", "t3"], 3.0, single_target=False)
         print(f'OpenSoundscape version: {version}.', file=log_file)
-        curlew_table = pd.read_csv(data_dir / Path("one-hot_labels.csv"))
-        curlew_table.filename = [str(data_dir / Path(f)) for f in curlew_table.filename]
+        print(f'Training files:', file=log_file)
+        training_df = load_fileset(data_dir / Path(f'training'), expected_sample_rate, log_file)
+        print(f'Validation files', file=log_file)
+        validation_df = load_fileset(data_dir / Path(f'validation'), expected_sample_rate, log_file)
 
-        curlew_table['SR'] = curlew_table.apply(get_sample_rate, axis=1)
-
-        ct2 = curlew_table[curlew_table.SR == expected_sample_rate]
-        curlew_table = ct2
-
-        curlew_table = curlew_table.drop('SR', axis=1)
-
-        for fp in curlew_table['filename']:
-            sr: int = librosa.get_samplerate(fp)
-            print(f'File [{fp}]: {sr / 1000}kHz', file=log_file)
-            if sr != expected_sample_rate:
-                print(
-                    f'File {fp} has {sr / 1000}kHz sampling rate, expected {expected_sample_rate}. Resampling not implemented for training', file=log_file)
-                sys.exit(1)
-        print('\n')
-        print(f'Input data has {len(curlew_table.index)} records', file=log_file)
-
-        curlew_table = curlew_table.set_index('filename')
-
-        labels = curlew_table.columns.values.tolist()
-        print(f'Trainig set classes: {str(labels)}', file=log_file)
-
-        from sklearn.model_selection import train_test_split
-
-        train_df, validation_df = train_test_split(curlew_table, test_size=0.25, random_state=1)
-
-        print(f'Traing set size: {len(train_df.index)}, x {duration}s = {(len(train_df.index) * duration) / 3600.0:.2f}h', file=log_file)
+        labels = training_df.columns.values.tolist()
+        print(f'Training set classes: {str(labels)}', file=log_file)
         print(
-            f'Validation set size: {len(validation_df.index)}, x {duration}s = {(len(validation_df.index) * duration) / 3600.0:.2f}h', file=log_file)
-        tl = len(train_df.index)
-        vl =len(validation_df.index)
+            f'Training set size: {len(training_df.index)}, x {duration}s = {(len(training_df.index) * duration) / 3600.0:.2f}h',
+            file=log_file)
+        print(
+            f'Validation set size: {len(validation_df.index)}, x {duration}s = {(len(validation_df.index) * duration) / 3600.0:.2f}h',
+            file=log_file)
+        tl = len(training_df.index)
+        vl = len(validation_df.index)
         print("Sample count per classes:", file=log_file)
-        for c in curlew_table.columns:
-            ts = train_df[c].sum()
+        for c in labels:
+            ts = training_df[c].sum()
             vs = validation_df[c].sum()
-            print(f'  {c}: training {ts} ({(100.0*ts)/tl:.0f}%, validation {vs} ({(100.0*vs/vl):.0f}%),  #validation/#training {(100.0*vs/(ts+vs)):.0f}%)', file=log_file)
-        return train_df, validation_df
+            print(
+                f'  {c}: training {ts} ({(100.0 * ts) / tl:.0f}%), validation {vs} ({(100.0 * vs / vl):.0f}%), '
+                f'#validation/#training {(100.0 * vs / (ts + vs)):.0f}%)',
+                file=log_file)
+        return training_df, validation_df
 
 
 def save_loss_history(model_id: str, out_dir: Path, loss_history: Dict[int, float]):
     train_graph_fn: str = str(out_dir / Path(f'{model_id}_loss_history.png'))
     loss_history_fn: Path = out_dir / Path(f'{model_id}_loss_history.csv')
 
-    plt.scatter(loss_history.keys(), loss_history.values())
-    plt.title(f'{model_id} loss history')
+    plt.scatter(loss_history.keys(), loss_history.values(), label=model_id)
+    plt.title(f'Loss history')
     plt.xlabel('epoch')
     plt.ylabel('loss')
+    plt.legend(loc='upper right')
     plt.savefig(train_graph_fn)
     loss_history_df: DataFrame = DataFrame.from_dict(data=loss_history, orient='index', columns=['loss'])
     loss_history_df.index.name = 'epoch'
     loss_history_df.to_csv(loss_history_fn, sep=';')
 
 
-def build_model(output_dir: Path, arch: str, train_df: DataFrame, validation_df: DataFrame, duration: float,
+def build_model(output_dir: Path, arch: str, train_df: DataFrame, validate_df: DataFrame, duration: float,
                 sample_rate_Hz: int, n_epochs: int):
-    print(f'Training the model [ {arch}, {duration}s, {(int)(sample_rate_Hz / 1000)}kHz ]')
-
+    model_id: str = f'{arch}_{(int)(sample_rate_Hz / 1000)}kHz_{duration}s'
+    print(f'Training the model [ {model_id} ]')
     # Create model object
     classes = train_df.columns
-    from opensoundscape.torch.models.cnn import use_resample_loss
 
     model = CNN(arch, classes, duration, single_target=False)
     model.preprocessor.pipeline.load_audio.set(sample_rate=sample_rate_Hz)
-
     use_resample_loss(model)
 
-    model_id: str = f'{arch}_{(int)(sample_rate_Hz / 1000)}kHz_{duration}s'
     model_out_dir: Path = output_dir / Path(f'model_{model_id}')
     model_out_dir.mkdir(parents=True, exist_ok=True)
     print("model.single_target:", model.single_target)
@@ -152,7 +147,7 @@ def build_model(output_dir: Path, arch: str, train_df: DataFrame, validation_df:
     # Train the Model
     model.train(
         train_df=train_df,
-        validation_df=validation_df,
+        validation_df=validate_df,
         save_path=model_out_dir,  # where to save the trained model
         epochs=n_epochs,
         batch_size=20,
@@ -163,7 +158,7 @@ def build_model(output_dir: Path, arch: str, train_df: DataFrame, validation_df:
     save_loss_history(model_id, model_out_dir, model.loss_hist)
 
 
-def build_models(output_dir: Path, train_df: DataFrame, validation_df: DataFrame, duration: float, sample_rate_Hz: int,
+def build_models(output_dir: Path, train_df: DataFrame, validate_df: DataFrame, duration: float, sample_rate_Hz: int,
                  n_epochs: int):
     print(f'Building models sample duration: {duration}s, sample rate: {sample_rate_Hz}Hz')
     archs: List[str] = cnn_architectures.list_architectures()
@@ -171,9 +166,19 @@ def build_models(output_dir: Path, train_df: DataFrame, validation_df: DataFrame
         try:
             if arch.lower().startswith("inception_v3"):
                 raise NotImplementedError("Omitted InceptionV3 arch - special training data not implemented")
-            build_model(output_dir, arch, train_df, validation_df, duration, sample_rate_Hz, n_epochs)
+            build_model(output_dir, arch, train_df, validate_df, duration, sample_rate_Hz, n_epochs)
         except Exception as ex:
             print(f'Exception occurred while training the {arch} model: {ex}')
+
+
+def start_building(args):
+    dt: datetime = datetime.now()
+    suffix: str = dt.strftime("%Y%m%d_%H%M%SUTC")
+    out_dir = Path(f'./trained_models_{suffix}')
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    train_df, validate_df = prepare_training_data(args.input_data_dir, args.sample_rate, args.duration, out_dir)
+    build_models(out_dir, train_df, validate_df, args.duration, args.sample_rate, args.epochs)
 
 
 def list_architectures():
@@ -186,16 +191,8 @@ def list_architectures():
 
 
 if __name__ == '__main__':
-
-    args = parse_commandline_args()
-    if args.list:
+    cmd_args = parse_commandline_args()
+    if cmd_args.list:
         list_architectures()
         sys.exit(0)
-
-    dt: datetime = datetime.now()
-    suffix: str = dt.strftime("%Y%m%d_%H%M%SUTC")
-    out_dir = Path(f'./trained_models_{suffix}')
-    out_dir.mkdir(parents=True, exist_ok=True)
-
-    train_df, validation_df = prepare_training_data(args.input_data_dir, args.sample_rate, args.duration, out_dir)
-    build_models(out_dir, train_df, validation_df, args.duration, args.sample_rate, args.epochs)
+    start_building(cmd_args)
