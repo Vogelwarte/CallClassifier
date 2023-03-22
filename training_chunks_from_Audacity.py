@@ -160,7 +160,7 @@ def do_the_butchery(args):
                     if success:
                         print(f'{name.name},' + ','.join(one_hot) ,file=rf)
                         c_count += 1
-            print(f"{str(cdf.name)}: {c_count} of {len(chunk_definitions)} chunks created, {not_annot} ignored as not '{annot_name}'", file=rf)
+                #print(f"{str(cdf.name)}: {c_count} of {len(chunk_definitions)} chunks created, {not_annot} ignored as not '{annot_name}'", file=rf)
             except Exception as ex:
                 print(f"Error while processing {str(cdf.name)}: {ex}", file=sys.stderr)
 
