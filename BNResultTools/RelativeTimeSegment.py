@@ -87,8 +87,10 @@ class RelativeTimeSegment(metaclass=ABCMeta):
 
 class LabeledRelativeTimeSegment(RelativeTimeSegment):
 
-    def __init__(self, t0: float, t1: float, label: str = "") -> 'LabeledRelativeTimeSegment':
+    def __init__(self, t0: float, t1: float, label: str ="") -> 'LabeledRelativeTimeSegment':
         self.label = label
         RelativeTimeSegment.__init__(self, t0, t1)
 
-
+    @staticmethod
+    def from_rts(rts: RelativeTimeSegment, label: str ) -> 'LabeledRelativeTimeSegment':
+        return LabeledRelativeTimeSegment( rts.begin_time, rts.end_time, label)
