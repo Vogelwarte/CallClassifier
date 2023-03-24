@@ -31,8 +31,12 @@ def parse_commandline_args():
                         default=".")
     parser.add_argument("-e", "--epochs", help=f'Number of epochs in the training', type=int, default=100)
     parser.add_argument("-d", "--duration", help="Call duration in seconds. Default=3s", default=3.0, type=float)
-    parser.add_argument("-r", "--sample_rate", help="Sample rate to be used in the model, in Hz. Default=16000Hz",
+    parser.add_argument("-r", "--sample_rate", help="Sample rate to be used in the model, in Hz. Default=32000Hz",
                         default=32000, type=int)
+    parser.add_argument("-m", "--multi_target",
+                        help="Buld a multi-target model. If nod given, the model is single-target",
+                        default=False, type=bool)
+
     return parser.parse_args()
 
 
@@ -53,11 +57,19 @@ def get_sample_rate(row) -> Series:
     return pd.Series([sr])
 
 
+def log_input_filelist_error(fl: DataFrame, title: str):
+    print(title, file=sys.stderr)
+    print(f'{len(fl)} file(s):', file=sys.stderr)
+
+
 def load_fileset(dir_with_files: Path, expected_sample_rate: int, log_file) -> DataFrame:
     table: DataFrame = pd.read_csv(dir_with_files / Path("one-hot_labels.csv"))
     table.filename = [str(dir_with_files / Path(f)) for f in table.filename]
 
     table['SR'] = table.apply(get_sample_rate, axis=1)
+    log_input_filelist_error(table[table.SR == -1], 'Files not found or not audio')
+    log_input_filelist_error(table.loc[((table.SR > 0) & (table.SR != expected_sample_rate))],
+                             f'Sample rate ({expected_sample_rate / 1000}kHz) mismatch ')
     ct2 = table[table.SR == expected_sample_rate]
     table = ct2
     table = table.drop('SR', axis=1)
@@ -122,13 +134,13 @@ def save_loss_history(model_id: str, out_dir: Path, loss_history: Dict[int, floa
 
 
 def build_model(output_dir: Path, arch: str, train_df: DataFrame, validate_df: DataFrame, duration: float,
-                sample_rate_Hz: int, n_epochs: int):
+                sample_rate_Hz: int, n_epochs: int, single_target:bool):
     model_id: str = f'{arch}_{(int)(sample_rate_Hz / 1000)}kHz_{duration}s'
     print(f'Training the model [ {model_id} ]')
     # Create model object
     classes = train_df.columns
 
-    model = CNN(arch, classes, duration, single_target=False)
+    model = CNN(arch, classes, duration, single_target=single_target)
     model.preprocessor.pipeline.load_audio.set(sample_rate=sample_rate_Hz)
     use_resample_loss(model)
 
@@ -159,14 +171,14 @@ def build_model(output_dir: Path, arch: str, train_df: DataFrame, validate_df: D
 
 
 def build_models(output_dir: Path, train_df: DataFrame, validate_df: DataFrame, duration: float, sample_rate_Hz: int,
-                 n_epochs: int):
+                 n_epochs: int, single_target:bool):
     print(f'Building models sample duration: {duration}s, sample rate: {sample_rate_Hz}Hz')
     archs: List[str] = cnn_architectures.list_architectures()
     for arch in archs:
         try:
             if arch.lower().startswith("inception_v3"):
                 raise NotImplementedError("Omitted InceptionV3 arch - special training data not implemented")
-            build_model(output_dir, arch, train_df, validate_df, duration, sample_rate_Hz, n_epochs)
+            build_model(output_dir, arch, train_df, validate_df, duration, sample_rate_Hz, n_epochs, single_target )
         except Exception as ex:
             print(f'Exception occurred while training the {arch} model: {ex}')
 
@@ -178,7 +190,7 @@ def start_building(args):
     out_dir.mkdir(parents=True, exist_ok=True)
 
     train_df, validate_df = prepare_training_data(args.input_data_dir, args.sample_rate, args.duration, out_dir)
-    build_models(out_dir, train_df, validate_df, args.duration, args.sample_rate, args.epochs)
+    build_models(out_dir, train_df, validate_df, args.duration, args.sample_rate, args.epochs, (not args.multi_target) )
 
 
 def list_architectures():

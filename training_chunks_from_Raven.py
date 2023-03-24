@@ -1,6 +1,7 @@
 import argparse
 import os
 import sys
+import traceback
 from datetime import datetime
 from math import ceil, floor
 from pathlib import Path
@@ -40,7 +41,7 @@ def parse_commandline():
 
 def createChunks(cd: RelativeTimeSegment, audio_file: Path, name_stem: str, output_dir: Path,
                  annotation: str, sample_rate: int) -> bool:
-    audio_type: str = "wav"  # "ogg" # "mp3"
+    audio_type: str = 'flac' #"wav"  # "ogg" # "mp3"
     a = annotation.replace("?", "_MAYBE")
 
     new_file_name = name_stem + "_" + cd.to_int_mmss_string().replace(":", ";") + "_(" + a + ")." + audio_type
@@ -71,7 +72,7 @@ def createChunkFile(file_path: Path, rts: RelativeTimeSegment, audio_file: Path,
     return True
 
 
-def create_output_dir_structure(results_folder: Path) -> (Path, Path):
+def create_output_dir_structure(results_folder: Path) -> (Path, Path,Path):
     dt: datetime = datetime.utcnow()
     prefix: str = dt.strftime("%Y%m%d_%H%M%SUTC")
     output_type: str = "chunks"
@@ -79,16 +80,19 @@ def create_output_dir_structure(results_folder: Path) -> (Path, Path):
     os.mkdir(out_dir)
     if not out_dir.is_dir():
         raise NotADirectoryError("Cannot create output directory " + str(out_dir))
-    report_file: Path = Path(out_dir / f"{prefix}_summary.csv")
-    return out_dir, report_file
+    log_file: Path = Path(out_dir / f'processing_log.txt')
+    label_file: Path = Path(out_dir / f'one-hot_labels.csv')
+
+    return out_dir, log_file, label_file
 
 
-def generate_chunk_coverage(ts: RelativeTimeSegment, chunk_length: float, overlap: float) -> List[RelativeTimeSegment]:
-    if ts.duration()<chunk_length:
+def generate_chunk_coverage(ts: RelativeTimeSegment, chunk_length: float, min_overlap: float) -> List[RelativeTimeSegment]:
+    if ts.duration() <= chunk_length:
         return [ts]
     if ts.duration() - chunk_length < 1.0:
         return [RelativeTimeSegment(ts.middle() - chunk_length/2.0, ts.middle()+chunk_length/2.0)]
-    step: float = chunk_length - overlap
+    step: float = chunk_length - min_overlap
+
     n_steps: int = ceil((ts.duration() - chunk_length) / step)
     real_step: float = (ts.duration() - chunk_length) / n_steps
     results_list: List[RelativeTimeSegment] = []
@@ -109,14 +113,17 @@ def do_the_butchery(args):
     odir: Path = Path(args.output_directory)
     if not odir.exists():
         os.mkdir(odir)
-    exe_output_dir, report_file = create_output_dir_structure(odir)
-    with open(report_file, "w") as rf:
+    exe_output_dir, log_fp, labels_fp = create_output_dir_structure(odir)
+    with open(log_fp, "w") as log, open(labels_fp, "w") as labels:
         df_processed = 0
-        print("Extracting audio fragments report file. \n", file=rf)
-        print(f"Input file/folder: {args.input_dir}", file=rf)
-        print(f"Audio root director: {args.audio_root_dir}\n", file=rf)
-        print(f"\nFound {len(chunk_def_files)} inpupt files.\n", file=rf)
+        print(f'Extracting audio fragments report file. Start of processing: {datetime.now()} \n', file=log)
+        print(f'Input file/folder: {args.input_dir}', file=log)
+        print(f'Audio root director: {args.audio_root_dir}\n', file=log)
+        print(f'\nFound {len(chunk_def_files)} inpupt files.\n', file=log)
 
+        str_present: str = 'RockPtarmigan'
+        str_absent: str = '_noise'
+        print(f'filename, {str_absent}, {str_present}', file=labels)
         for cdf in chunk_def_files:
             try:
                 chunk_definitions: List[Table1SelectionRecord] = Table1SelectionRecord.parse_file(cdf)
@@ -125,7 +132,8 @@ def do_the_butchery(args):
                 name_stem: str = str(cdf.name)[0:-len(input_extension)]
                 audio_file = audio_files.get(name_stem, None)
                 if audio_file is None:
-                    raise FileNotFoundError(name_stem)
+                    print(f'Cannot fing audiofile for {cdf.name}, skipping this annotation')
+                    continue
                 duration = librosa.get_duration(filename=audio_file)
                 if duration < chunk_length:
                     raise RuntimeError(f'audio file {name_stem} is too short ({duration}s) ')
@@ -140,30 +148,33 @@ def do_the_butchery(args):
                                 absents.remove(a)
                         if cd.duration() < max(1, chunk_length - 2):
                             continue
-                        presents.extend(generate_chunk_coverage(ts = cd.extended(1.0), chunk_length=chunk_length, overlap=1.5) )
+                        presents.extend(generate_chunk_coverage(ts = cd.extended(1.0), chunk_length=chunk_length, min_overlap=1.2) )
 
                 for chunk in presents:
-                    success, name = createChunks(chunk, audio_file, name_stem, exe_output_dir, "present", args.resample)
+                    success, name = createChunks(chunk, audio_file, name_stem, exe_output_dir, str_present, args.resample)
                     if success:
-                        print(f'{str(name)} , 0, 1', file=rf)
+                        print(f'{str(name)} , 0, 1', file=labels)
                         c_count += 1
-                every_n: int = floor(len(absents)/max(duration / 60, 10*len(presents)))
+                n_absent = ceil(duration / 60)
+                every_n: int = ceil( len(absents) / n_absent)
                 i:int = 0
                 for chunk in absents:
                     i+=1
                     if i % every_n != 0:
                         continue
-                    success, name = createChunks(chunk, audio_file, name_stem, exe_output_dir, "absent", args.resample)
+                    success, name = createChunks(chunk, audio_file, name_stem, exe_output_dir, str_absent, args.resample)
                     if success:
-                        print(f'{str(name)} , 1, 0', file=rf)
+                        print(f'{str(name)} , 1, 0', file=labels)
                         not_annot += 1
             #print(f"{str(cdf.name)}: {c_count} of {len(chunk_definitions)} chunks created, {not_annot} ignored as not '{annot_name}'", file=rf)
-            except Exception as ex:
-                print(f"Error while processing {str(cdf.name)}: {ex}", file=rf)
-            finally:
-                df_processed += 1
 
-        print(f"\n End of processing, {df_processed} of {len(chunk_def_files)} input files processed", file=rf)
+            except Exception as ex:
+                print(f"Error while processing {str(cdf.name)}: {ex}", file=log)
+                traceback.print_stack(file=sys.stderr)
+            finally:
+               df_processed += 1
+
+        print(f"\n End of processing, {df_processed} of {len(chunk_def_files)} input files processed, {datetime.now()} ", file=log)
 
 
 # sox : offset + duration   normalised to 3s, new offset + new duration
