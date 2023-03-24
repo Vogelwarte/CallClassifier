@@ -15,7 +15,7 @@ import pkg_resources
 from matplotlib import pyplot as plt
 from matplotlib_inline.config import InlineBackend
 from opensoundscape.torch.architectures import cnn_architectures
-from opensoundscape.torch.models.cnn import CNN, use_resample_loss
+from opensoundscape.torch.models.cnn import CNN, use_resample_loss, InceptionV3
 from pandas import DataFrame, Series
 
 plt.rcParams['figure.figsize'] = [15, 5]  # for large visuals
@@ -134,13 +134,18 @@ def save_loss_history(model_id: str, out_dir: Path, loss_history: Dict[int, floa
 
 
 def build_model(output_dir: Path, arch: str, train_df: DataFrame, validate_df: DataFrame, duration: float,
-                sample_rate_Hz: int, n_epochs: int, single_target:bool):
+                sample_rate_Hz: int, n_epochs: int, single_target: bool):
     model_id: str = f'{arch}_{(int)(sample_rate_Hz / 1000)}kHz_{duration}s'
     print(f'Training the model [ {model_id} ]')
     # Create model object
     classes = train_df.columns
 
-    model = CNN(arch, classes, duration, single_target=single_target)
+    model: CNN = None
+    if arch.lower().startswith("inception_v3"):
+        model = InceptionV3(classes=classes, sample_duration=duration, single_target=single_target)
+    else:
+        model = CNN(architecture=arch, classes=classes, sample_duration=duration, single_target=single_target)
+
     model.preprocessor.pipeline.load_audio.set(sample_rate=sample_rate_Hz)
     use_resample_loss(model)
 
@@ -171,14 +176,12 @@ def build_model(output_dir: Path, arch: str, train_df: DataFrame, validate_df: D
 
 
 def build_models(output_dir: Path, train_df: DataFrame, validate_df: DataFrame, duration: float, sample_rate_Hz: int,
-                 n_epochs: int, single_target:bool):
+                 n_epochs: int, single_target: bool):
     print(f'Building models sample duration: {duration}s, sample rate: {sample_rate_Hz}Hz')
     archs: List[str] = cnn_architectures.list_architectures()
     for arch in archs:
         try:
-            if arch.lower().startswith("inception_v3"):
-                raise NotImplementedError("Omitted InceptionV3 arch - special training data not implemented")
-            build_model(output_dir, arch, train_df, validate_df, duration, sample_rate_Hz, n_epochs, single_target )
+            build_model(output_dir, arch, train_df, validate_df, duration, sample_rate_Hz, n_epochs, single_target)
         except Exception as ex:
             print(f'Exception occurred while training the {arch} model: {ex}')
 
@@ -190,7 +193,7 @@ def start_building(args):
     out_dir.mkdir(parents=True, exist_ok=True)
 
     train_df, validate_df = prepare_training_data(args.input_data_dir, args.sample_rate, args.duration, out_dir)
-    build_models(out_dir, train_df, validate_df, args.duration, args.sample_rate, args.epochs, (not args.multi_target) )
+    build_models(out_dir, train_df, validate_df, args.duration, args.sample_rate, args.epochs, (not args.multi_target))
 
 
 def list_architectures():
