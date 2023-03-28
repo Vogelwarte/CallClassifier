@@ -16,7 +16,8 @@ from BNResultTools.files_dirs_tools import list_of_files, dictionary_by_bare_nam
 
 def parse_commandline():
     parser = argparse.ArgumentParser()
-    parser.description = f'Extracts audio chunks from long wav fille based on BirdNET (Raven-ish) result files and resamples it to 32kHz'
+    parser.description = f'Extracts audio chunks from long wav fille based on BirdNET (Raven-ish) result files and ' \
+                         f'resamples it to 32kHz '
     parser.add_argument("-i", "--input",
                         help="Path to the file or folder of the manual annotation in the *.Table.1.selections.txt format",
                         default=".")

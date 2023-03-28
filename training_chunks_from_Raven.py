@@ -164,7 +164,7 @@ def do_the_butchery(args):
                         continue
                     success, name = createChunks(chunk, audio_file, name_stem, exe_output_dir, str_absent, args.resample)
                     if success:
-                        print(f'{str(name)} , 1, 0', file=labels)
+                        print(f'{str(name)}, 1, 0', file=labels)
                         not_annot += 1
             #print(f"{str(cdf.name)}: {c_count} of {len(chunk_definitions)} chunks created, {not_annot} ignored as not '{annot_name}'", file=rf)
 
