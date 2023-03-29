@@ -231,31 +231,33 @@ def classify_audio_file(in_audio_fp: Path, output_dir: Path, model: CNN, model_n
     print(f'End of processing, output file: {in_audio_fp}')
 
 def do_the_stuff():
-    with set_posix_windows():
-        input_def: SingleInputDefinition = parse_command_line()
-        models = load_cnn_models()
-        for in_fp in input_def.input_files:
-            for mn in models.keys():
-                try:
-                    out_dir: Path = input_def.output_dir / in_fp.relative_to(input_def.base_input_dir).parent
-                    classify_audio_file(in_fp, out_dir, models[mn], mn)
-                except Exception as ex:
-                    print(f'Error with model {mn}, audio file {in_fp}:\n{ex}', file=sys.stderr)
+    input_def: SingleInputDefinition = parse_command_line()
+    models = load_cnn_models()
+    for in_fp in input_def.input_files:
+        for mn in models.keys():
+            try:
+                out_dir: Path = input_def.output_dir / in_fp.relative_to(input_def.base_input_dir).parent
+                classify_audio_file(in_fp, out_dir, models[mn], mn)
+            except Exception as ex:
+                print(f'Error with model {mn}, audio file {in_fp}:\n{ex}', file=sys.stderr)
 
 
 @contextmanager
 def set_posix_windows():
-    if platform.system() == 'Windows':
-        posix_backup = pathlib.PosixPath
-        try:
-            pathlib.PosixPath = pathlib.WindowsPath
-            yield
-        finally:
-            pathlib.PosixPath = posix_backup
+    posix_backup = pathlib.PosixPath
+    try:
+        pathlib.PosixPath = pathlib.WindowsPath
+        yield
+    finally:
+        pathlib.PosixPath = posix_backup
 
 if __name__ == '__main__':
     start: float = time.time()
-    do_the_stuff()
+    if platform.system() == 'Windows':
+        with set_posix_windows():
+            do_the_stuff()
+    else:
+        do_the_stuff()
     end: float = time.time()
     print(f'\nTotal processing time: {int(end - start)}s')
     sys.exit(0)
