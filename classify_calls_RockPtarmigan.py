@@ -5,6 +5,8 @@ import platform
 import subprocess
 import sys
 import time
+from datetime import datetime
+
 import pandas as pd
 
 from contextlib import contextmanager
@@ -66,7 +68,12 @@ def parse_command_line() -> SingleInputDefinition:
             if not out_dir.is_dir():
                 raise NotADirectoryError(f'{out_dir} cannot be an output folder')
         else:
-            os.mkdir(out_dir)
+            os.makedirs(out_dir, exist_ok=True)
+
+        dt: datetime = datetime.now()
+        suffix: str = dt.strftime("%Y%m%d_%H%M%SUTC")
+        out_dir = out_dir / f'classification_result_{suffix}'
+        os.makedirs(out_dir, exist_ok=True)
         return SingleInputDefinition(if_list, base_dir, out_dir)
     except Exception as ex:
         print(ex, file=sys.stderr)
@@ -118,16 +125,20 @@ def type_of_maxval(row) -> Series:
 
     return pd.Series([f'type{ct}', vect4[ct - 1]])
 
-def load_cnn_model() -> (CNN, str):
+def load_cnn_models() -> {str, CNN}:
     freeze_support()
+    result_dict: {str, CNN} = {}
     # load the model
-#    model_name = "resnet50_24kHz_3.0s"
-#    model_name = "resnet101_24kHz_3.0s_ST"
-    model_name = "inception_v3_24kHz_3.0s_ST"
+    model_names = ["resnet18_24kHz_3.0s",
+                   "resnet101_24kHz_3.0s",
+                   "resnet152_24kHz_3.0s",
+                   "inception_v3_24kHz_3.0s"]
 
-    model: CNN = load_model(f'bird_data/Rock_ptarmigan/models/model_{model_name}/best.model')
-    model.preprocessor.pipeline.load_audio.set(sample_rate=24000)
-    return model, model_name
+    for mn in model_names:
+        model: CNN = load_model(f'bird_data/Rock_ptarmigan/models/model_{mn}/best.model')
+        model.preprocessor.pipeline.load_audio.set(sample_rate=24000)
+        result_dict[mn] = model
+    return result_dict
 
 
 def run_call_classifier_model(audio_file: Path, model:CNN) -> DataFrame: #, curlew_calls_df: DataFrame) -> DataFrame:
@@ -206,12 +217,14 @@ def classify_audio_file(in_audio_fp: Path, output_dir: Path, model: CNN, model_n
     #drop the file columne (anyway its about one audio file {in_audio_fp} only)
     classification_result.drop(columns=['file'], inplace=True, axis=1)
 
-    #classification_result DataFrame format: (numeric index), [start_time_, end_time, _noise, RockPtarmigan]
+    #make sure that a model name subdir exists
+    os.makedirs(output_dir / model_name, exist_ok = True )
 
-    cc_result_fp: Path = output_dir / (in_audio_fp.name + f'.RpCC-{model_name}.selection.table.txt')
+    #classification_result DataFrame format: (numeric index), [start_time_, end_time, _noise, RockPtarmigan]
+    cc_result_fp: Path = output_dir / model_name / (in_audio_fp.name + f'.RpCC-{model_name}.selection.table.txt')
     write_BirdNET_like_result(cc_result_fp, classification_result)
 
-    audacity_labels_fp: Path = output_dir / (f'labels-{model_name}_{in_audio_fp.name}.txt')
+    audacity_labels_fp: Path = output_dir / model_name / (f'labels-{model_name}_{in_audio_fp.name}.txt')
     write_Audacity_labels_result(audacity_labels_fp, classification_result )
 
 
@@ -220,13 +233,14 @@ def classify_audio_file(in_audio_fp: Path, output_dir: Path, model: CNN, model_n
 def do_the_stuff():
     with set_posix_windows():
         input_def: SingleInputDefinition = parse_command_line()
-        model, model_name = load_cnn_model()
+        models = load_cnn_models()
         for in_fp in input_def.input_files:
-            #try:
-            out_dir: Path = input_def.output_dir / in_fp.relative_to(input_def.base_input_dir).parent
-            classify_audio_file(in_fp, out_dir, model,model_name)
-            #except Exception as ex:
-            #    print(f'Error with file {in_fp}:\n{ex}', file=sys.stderr)
+            for mn in models.keys():
+                try:
+                    out_dir: Path = input_def.output_dir / in_fp.relative_to(input_def.base_input_dir).parent
+                    classify_audio_file(in_fp, out_dir, models[mn], mn)
+                except Exception as ex:
+                    print(f'Error with model {mn}, audio file {in_fp}:\n{ex}', file=sys.stderr)
 
 
 @contextmanager
