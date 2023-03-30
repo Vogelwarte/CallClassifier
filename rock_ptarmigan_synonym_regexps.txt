@@ -1,0 +1,6 @@
+ptar
+patr
+ptar\d*
+patr\d*
+rocpta1
+(rock\s+)?ptarmigan
