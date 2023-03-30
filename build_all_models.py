@@ -30,7 +30,9 @@ def parse_commandline_args():
                         help=f'Path to the folder with the audio and the one-hot labels file "one-hot_labels.csv" ',
                         default=".")
     parser.add_argument("-e", "--epochs", help=f'Number of epochs in the training', type=int, default=100)
-    parser.add_argument("-d", "--duration", help="Call duration in seconds. Default=3s", default=3.0, type=float)
+    #parser.add_argument("-d", "--duration", help="Call duration in seconds. Default=3s", default=3.0, type=float)
+    parser.add_argument("-a", "--architecture", help="Name of the architecture. If not given, all available "
+                                                     "architectures will be used", type=str)
     parser.add_argument("-r", "--sample_rate", help="Sample rate to be used in the model, in Hz. Default=32000Hz",
                         default=32000, type=int)
     parser.add_argument("-m", "--multi_target",
@@ -149,7 +151,7 @@ def build_model(output_dir: Path, arch: str, train_df: DataFrame, validate_df: D
     model.preprocessor.pipeline.load_audio.set(sample_rate=sample_rate_Hz)
     use_resample_loss(model)
 
-    model_out_dir: Path = output_dir / Path(f'model_{model_id}')
+    model_out_dir: Path = output_dir / Path(f'{model_id}')
     model_out_dir.mkdir(parents=True, exist_ok=True)
     print("model.single_target:", model.single_target)
     # Logging the Model preformance
@@ -179,6 +181,7 @@ def build_models(output_dir: Path, train_df: DataFrame, validate_df: DataFrame, 
                  n_epochs: int, single_target: bool):
     print(f'Building models sample duration: {duration}s, sample rate: {sample_rate_Hz}Hz')
     archs: List[str] = cnn_architectures.list_architectures()
+    archs = ['inception_v3', 'resnet18', 'resnet152', 'efficientnet_b0' ]
     for arch in archs:
         try:
             build_model(output_dir, arch, train_df, validate_df, duration, sample_rate_Hz, n_epochs, single_target)
@@ -192,7 +195,9 @@ def start_building(args):
     out_dir = Path(f'./trained_models_{suffix}')
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    train_df, validate_df = prepare_training_data(args.input_data_dir, args.sample_rate, args.duration, out_dir)
+    chunk_duration: float = 3.0
+
+    train_df, validate_df = prepare_training_data(args.input_data_dir, args.sample_rate, chunk_duration, out_dir)
     build_models(out_dir, train_df, validate_df, args.duration, args.sample_rate, args.epochs, (not args.multi_target))
 
 
