@@ -132,7 +132,7 @@ def do_the_butchery(args):
                 name_stem: str = str(cdf.name)[0:-len(input_extension)]
                 audio_file = audio_files.get(name_stem, None)
                 if audio_file is None:
-                    print(f'Cannot fing audiofile for {cdf.name}, skipping this annotation')
+                    print(f'Cannot find audiofile for {cdf.name}, skipping this annotation')
                     continue
                 duration = librosa.get_duration(filename=audio_file)
                 if duration < chunk_length:
@@ -155,8 +155,9 @@ def do_the_butchery(args):
                     if success:
                         print(f'{str(name)} , 0, 1', file=labels)
                         c_count += 1
-                n_absent = ceil(duration / 60)
-                every_n: int = ceil( len(absents) / n_absent)
+                #n_absent = ceil(duration / 60)
+                #every_n: int = ceil( len(absents) / n_absent)
+                every_n = 1
                 i:int = 0
                 for chunk in absents:
                     i+=1
