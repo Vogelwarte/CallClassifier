@@ -17,6 +17,7 @@ from matplotlib_inline.config import InlineBackend
 from opensoundscape.torch.architectures import cnn_architectures
 from opensoundscape.torch.models.cnn import CNN, use_resample_loss, InceptionV3
 from pandas import DataFrame, Series
+from sklearn.model_selection import train_test_split
 
 plt.rcParams['figure.figsize'] = [15, 5]  # for large visuals
 InlineBackend.figure_format = 'retina'
@@ -94,12 +95,21 @@ def prepare_training_data(data_dir: Path, expected_sample_rate: int, duration: i
     with open(output_dir / Path(f'training_data_log'), "w") as log_file:
         version = pkg_resources.get_distribution("opensoundscape").version
         print(f'OpenSoundscape version: {version}.', file=log_file)
-        print(f'Training files:', file=log_file)
-        training_df = load_fileset(data_dir / Path(f'training'), expected_sample_rate, log_file)
-        print(f'Validation files', file=log_file)
-        validation_df = load_fileset(data_dir / Path(f'validation'), expected_sample_rate, log_file)
 
-        labels = training_df.columns.values.tolist()
+        training_dir: Path = data_dir / Path(f'training')
+        validation_dir: Path = data_dir / Path(f'validation')
+        labels: [str] = []
+        if training_dir.is_dir() and validation_dir.is_dir():
+            print(f'Training files:', file=log_file)
+            training_df = load_fileset(training_dir, expected_sample_rate, log_file)
+            print(f'Validation files', file=log_file)
+            validation_df = load_fileset(validation_dir, expected_sample_rate, log_file)
+            labels = training_df.columns.values.tolist()
+        else:
+            all_df: DataFrame = load_fileset(data_dir, expected_sample_rate, log_file)
+            labels = all_df.columns.values.tolist()
+            training_df, validation_df = train_test_split(all_df, test_size=0.25, random_state=1, stratify=labels)
+
         print(f'Training set classes: {str(labels)}', file=log_file)
         print(
             f'Training set size: {len(training_df.index)}, x {duration}s = {(len(training_df.index) * duration) / 3600.0:.2f}h',
