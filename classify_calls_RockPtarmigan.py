@@ -72,7 +72,7 @@ def parse_command_line() -> SingleInputDefinition:
 
         dt: datetime = datetime.now()
         suffix: str = dt.strftime("%Y%m%d_%H%M%SUTC")
-        out_dir = out_dir / f'classification_result_{suffix}'
+        out_dir = out_dir / f'classification_RockPtarmigan_{suffix}'
         os.makedirs(out_dir, exist_ok=True)
         return SingleInputDefinition(if_list, base_dir, out_dir)
     except Exception as ex:
@@ -130,23 +130,32 @@ def load_cnn_models() -> {str, CNN}:
     result_dict: {str, CNN} = {}
     # load the model
     model_names = ["resnet18_24kHz_3.0s",
-                   "resnet101_24kHz_3.0s",
-                   "resnet152_24kHz_3.0s",
                    "inception_v3_24kHz_3.0s"]
+    # "resnet101_24kHz_3.0s",
+    # "resnet152_24kHz_3.0s",
 
     for mn in model_names:
-        model: CNN = load_model(f'bird_data/Rock_ptarmigan/models/model_{mn}/best.model')
+        model: CNN = load_model(f'bird_data/Rock_ptarmigan/models/{mn}/best.model')
         model.preprocessor.pipeline.load_audio.set(sample_rate=24000)
         result_dict[mn] = model
     return result_dict
 
+def get_number_of_cpus() -> int:
+    try:
+        return len(os.sched_getaffinity(0))
+    except:
+        pass
+    return os.cpu_count()
 
 def run_call_classifier_model(audio_file: Path, model:CNN) -> DataFrame: #, curlew_calls_df: DataFrame) -> DataFrame:
     # print("\nClassifying the call types ...\n")
-    scores_df = model.predict(num_workers=10,
+    n_cpus = get_number_of_cpus()
+    n_workers: int = max(1, n_cpus - 4)
+
+    scores_df = model.predict(num_workers=n_workers,
                               samples=[str(audio_file)],
                               split_files_into_clips=True,
-                              overlap_fraction=0.66667,
+                              overlap_fraction=2.0/3.0,
                               final_clip='full',
                               activation_layer='sigmoid')
     results_df: DataFrame = scores_df
@@ -217,26 +226,25 @@ def classify_audio_file(in_audio_fp: Path, output_dir: Path, model: CNN, model_n
     #drop the file columne (anyway its about one audio file {in_audio_fp} only)
     classification_result.drop(columns=['file'], inplace=True, axis=1)
 
-    #make sure that a model name subdir exists
-    os.makedirs(output_dir / model_name, exist_ok = True )
+    file_name_no_ext: str = in_audio_fp.stem
 
     #classification_result DataFrame format: (numeric index), [start_time_, end_time, _noise, RockPtarmigan]
-    cc_result_fp: Path = output_dir / model_name / (in_audio_fp.name + f'.RpCC-{model_name}.selection.table.txt')
+    cc_result_fp: Path = output_dir / f'{file_name_no_ext}.RpCC.selection.table.txt'
     write_BirdNET_like_result(cc_result_fp, classification_result)
 
-    audacity_labels_fp: Path = output_dir / model_name / (f'labels-{model_name}_{in_audio_fp.name}.txt')
+    audacity_labels_fp: Path = output_dir / (f'labels-{model_name}_{file_name_no_ext}.txt')
     write_Audacity_labels_result(audacity_labels_fp, classification_result )
-
 
     print(f'End of processing, output file: {in_audio_fp}')
 
 def do_the_stuff():
     input_def: SingleInputDefinition = parse_command_line()
     models = load_cnn_models()
-    for in_fp in input_def.input_files:
-        for mn in models.keys():
+    for mn in models.keys():
+        for in_fp in input_def.input_files:
             try:
-                out_dir: Path = input_def.output_dir / in_fp.relative_to(input_def.base_input_dir).parent
+                out_dir: Path = input_def.output_dir / Path(mn) / in_fp.relative_to(input_def.base_input_dir).parent
+                os.makedirs(out_dir,exist_ok=True)
                 classify_audio_file(in_fp, out_dir, models[mn], mn)
             except Exception as ex:
                 print(f'Error with model {mn}, audio file {in_fp}:\n{ex}', file=sys.stderr)
