@@ -155,14 +155,18 @@ def get_number_of_cpus() -> int:
 def run_call_classifier_model(audio_file: Path, model: CNN) -> DataFrame:  # , curlew_calls_df: DataFrame) -> DataFrame:
     # print("\nClassifying the call types ...\n")
     n_cpus = get_number_of_cpus()
-    n_workers: int = max(1, n_cpus - 4)
+    n_workers: int = max(1, n_cpus - 2)
 
+    pred_start: float = time.time()
     scores_df = model.predict(num_workers=n_workers,
+                              batch_size=60,
                               samples=[str(audio_file)],
                               split_files_into_clips=True,
                               overlap_fraction=2.0 / 3.0,
                               final_clip='full',
                               activation_layer='sigmoid')
+    pred_end: float = time.time()
+    print(f'prediction time {pred_end-pred_start:.2f}s', file=sys.stderr)
     results_df: DataFrame = scores_df
     results_df.reset_index()
 
