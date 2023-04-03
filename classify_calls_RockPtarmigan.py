@@ -42,31 +42,19 @@ class SingleInputDefinition:
 
 def parse_command_line() -> SingleInputDefinition:
     parser = argparse.ArgumentParser(
-        description='Classify Eurasian Curlew calls from audio file(s). Supported formats: wav')
-    parser.add_argument('--i',
-                        help='Path to input file or folder. If this is a file, --o needs to be a file too.')
-    parser.add_argument('--o',
+        description='Find Rock Ptarmigan calls in audio file(s). Supported formats: wav, flac')
+    parser.add_argument('-i', '--input',
+                        help='Path to input file or directory. If this is a file, --o needs to be a file too.')
+    parser.add_argument('-o', '--output',
                         help="Path to output folder. It will be created id it doesn't exists")
+    parser.add_argument('-l', '--file_list',
+                        help="(optional) text file with names of the files to classify. The '--input' must be a dir. \
+                        If not preset all files from the input dire are procecessed recursively ")
     args = parser.parse_args()
-    extensions: List[str] = ["wav", "flac"]
+
     try:
-        if_list: List[Path] = []
-        in_p = Path(args.i)
-        base_dir: Path = in_p.parent
-        if in_p.is_dir():
-            if_list = list_of_files_ex(in_p, extensions)
-            base_dir = in_p
-        else:
-            if in_p.is_file():
-                for ext in extensions:
-                    if in_p.name.lower().endswith(ext):
-                        if_list = [in_p]
-                        break
-                if len(if_list) == 0:
-                    raise RuntimeError(f'{in_p}: invalid filetype. Only {extensions} files are supported')
-            else:
-                raise Exception(f'{in_p} is neither file nor directory')
-        out_dir = Path(args.o)
+        base_dir, if_list = build_file_list(args)
+        out_dir = Path(args.output)
         if out_dir.exists():
             if not out_dir.is_dir():
                 raise NotADirectoryError(f'{out_dir} cannot be an output folder')
@@ -82,6 +70,35 @@ def parse_command_line() -> SingleInputDefinition:
         print(ex, file=sys.stderr)
         print(usage, file=sys.stdout)
         sys.exit(1)
+
+
+def build_file_list(args):
+    if_list: List[Path] = []
+    extensions: List[str] = ["wav", "flac"]
+    in_p = Path(args.input)
+    base_dir: Path = in_p.parent
+    if in_p.is_dir():
+        if_list = list_of_files_ex(in_p, extensions)
+        base_dir = in_p
+    else:
+        if in_p.is_file():
+            for ext in extensions:
+                if in_p.name.lower().endswith(ext):
+                    if_list = [in_p]
+                    break
+            if len(if_list) == 0:
+                raise RuntimeError(f'{in_p}: invalid filetype. Only {extensions} files are supported')
+        else:
+            raise Exception(f'{in_p} is neither file nor directory')
+    if args.file_list:
+        new_list:[Path] = []
+        with open(args.file_list, "r") as fl_file:
+            for line in fl_file:
+                if len(line.strip()):
+                    f: Path = base_dir / line.strip()
+                    new_list.append(f)
+        if_list = new_list
+    return base_dir, if_list
 
 
 def get_birdnet_results(infile: Path, output_dir: Path, common_name: str, confidence: float) -> DataFrame:
