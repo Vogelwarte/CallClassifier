@@ -14,6 +14,8 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import List
 from multiprocessing import freeze_support
+
+from guano import GuanoFile
 from pandas import DataFrame, Series
 from opensoundscape.torch.models.cnn import load_model, CNN
 from opensoundscape.audio import Audio
@@ -259,6 +261,12 @@ def classify_audio_file(in_audio_fp: Path, output_dir: Path, model: CNN, model_n
 
     print(f'End of processing, output file: {in_audio_fp}')
 
+def check_if_is_smmini(filepath: Path) -> bool:
+    gm: GuanoFile = GuanoFile(filename=str(filepath))
+    if gm['Model'] == 'Song Meter Mini':
+        return True
+    return False
+
 
 def do_the_stuff():
     input_def: SingleInputDefinition = parse_command_line()
@@ -279,7 +287,8 @@ def do_the_stuff():
                 fstart_time: float = time.time()
                 try:
                     file_size: int = in_fp.stat().st_size
-                    if file_size > min_audio_size:
+                    is_smmini: bool = check_if_is_smmini(in_fp)
+                    if file_size > min_audio_size and is_smmini:
                         file_out_dir: Path = input_def.output_dir / Path(mn) / in_fp.relative_to(
                             input_def.base_input_dir).parent
                         os.makedirs(file_out_dir, exist_ok=True)
@@ -290,8 +299,8 @@ def do_the_stuff():
                               f'file:[{in_fp}]', file=log_file, flush=True)
                     else:
                         files_omitted += 1
-                        print(f'File size too small: '
-                              f'{in_fp.stat().st_size / 1024.0:.1f}kB, '
+                        print(f'File omitted: SMMini:{is_smmini}, '
+                              f'file size{in_fp.stat().st_size / 1024.0:.1f}kB, '
                               f'min: {min_audio_size / 1024.0:.1f}kB, '
                               f'file:[{in_fp}]', file=log_file)
                     log_file.flush()
