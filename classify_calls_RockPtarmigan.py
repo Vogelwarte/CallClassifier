@@ -125,7 +125,7 @@ def type_of_maxval(row) -> Series:
 
     return pd.Series([f'type{ct}', vect4[ct - 1]])
 
-def load_cnn_models() -> {str, CNN}:
+def load_cnn_models(sample_rate: int) -> {str, CNN}:
     freeze_support()
     result_dict: {str, CNN} = {}
     # load the model
@@ -136,7 +136,7 @@ def load_cnn_models() -> {str, CNN}:
 
     for mn in model_names:
         model: CNN = load_model(f'bird_data/Rock_ptarmigan/models/{mn}/best.model')
-        model.preprocessor.pipeline.load_audio.set(sample_rate=24000)
+        model.preprocessor.pipeline.load_audio.set(sample_rate=sample_rate)
         result_dict[mn] = model
     return result_dict
 
@@ -160,12 +160,9 @@ def run_call_classifier_model(audio_file: Path, model:CNN) -> DataFrame: #, curl
                               activation_layer='sigmoid')
     results_df: DataFrame = scores_df
     results_df.reset_index()
-    # report_file: Path = Path("raw_types.csv")
-    # results_df.to_csv(report_file)
-    # results_df = pd.read_csv(report_file)
 
-    print("Raw model results: \n")
-    print(results_df)
+    #print("Raw model results: \n")
+    #print(results_df)
 
     return results_df
 
@@ -209,7 +206,6 @@ def write_Audacity_labels_result(out_fp: Path, data: DataFrame):
 def classify_audio_file(in_audio_fp: Path, output_dir: Path, model: CNN, model_name: str):
     print(f'Processing file: {in_audio_fp}...')
 
-
     classification_result: DataFrame = run_call_classifier_model(in_audio_fp, model)
     #expected structure: MultiIndex:[file, start_time, end_time], columns: [ _nothing, RockPtarmigan]
 
@@ -239,15 +235,28 @@ def classify_audio_file(in_audio_fp: Path, output_dir: Path, model: CNN, model_n
 
 def do_the_stuff():
     input_def: SingleInputDefinition = parse_command_line()
-    models = load_cnn_models()
+    sample_rate: int = 24000  # Hz
+    chunk_length: int = 3  # seconds;
+    min_audio_size: float = 0.3 * 2 * sample_rate * chunk_length    # 16bit = 2Bytes, 0.3 - optimistic flac compression rate
+    models = load_cnn_models(sample_rate)
     for mn in models.keys():
-        for in_fp in input_def.input_files:
-            try:
-                out_dir: Path = input_def.output_dir / Path(mn) / in_fp.relative_to(input_def.base_input_dir).parent
-                os.makedirs(out_dir,exist_ok=True)
-                classify_audio_file(in_fp, out_dir, models[mn], mn)
-            except Exception as ex:
-                print(f'Error with model {mn}, audio file {in_fp}:\n{ex}', file=sys.stderr)
+        with open( input_def.output_dir / f'{mn}_log.txt','w') as log_file:
+            for in_fp in input_def.input_files:
+                try:
+                    if in_fp.stat().st_size > min_audio_size:
+                        file_out_dir: Path = input_def.output_dir / Path(mn) / in_fp.relative_to(input_def.base_input_dir).parent
+                        os.makedirs(file_out_dir, exist_ok=True)
+                        classify_audio_file(in_fp, file_out_dir, models[mn], mn)
+                    else:
+                        raise RuntimeWarning(f'File size too small: '
+                                             f'{in_fp.stat().st_size/1024.0:.1f}kB, '
+                                             f'minimun: {min_audio_size/1024.0:.1f}kB,'
+                                             f'path: {in_fp}')
+                except Exception as ex:
+                    print(f'Exception with model {mn}, audio file {in_fp}:\n{ex}', file=log_file)
+                except:
+                    print(f'Unknown error with model {mn}, audio file {in_fp}', file=sys.log_file)
+
 
 
 @contextmanager
