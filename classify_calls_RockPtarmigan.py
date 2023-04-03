@@ -150,8 +150,7 @@ def load_cnn_models(sample_rate: int) -> {str, CNN}:
     freeze_support()
     result_dict: {str, CNN} = {}
     # load the model
-    model_names = ["resnet18_24kHz_3.0s",
-                   "inception_v3_24kHz_3.0s"]
+    model_names = ["inception_v3_24kHz_3.0s", "resnet18_24kHz_3.0s"]
     # "resnet101_24kHz_3.0s",
     # "resnet152_24kHz_3.0s",
     for mn in model_names:
