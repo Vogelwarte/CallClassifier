@@ -5,12 +5,12 @@ import sys
 from datetime import datetime
 # other utilities and packages
 # import pandas as pd
+from importlib import metadata
 from pathlib import Path
 from typing import List, Dict
 
 import librosa
 import pandas as pd
-import pkg_resources
 # set up plotting
 from matplotlib import pyplot as plt
 from matplotlib_inline.config import InlineBackend
@@ -31,7 +31,7 @@ def parse_commandline_args():
                         help=f'Path to the folder with the audio and the one-hot labels file "one-hot_labels.csv" ',
                         default=".")
     parser.add_argument("-e", "--epochs", help=f'Number of epochs in the training', type=int, default=100)
-    #parser.add_argument("-d", "--duration", help="Call duration in seconds. Default=3s", default=3.0, type=float)
+    # parser.add_argument("-d", "--duration", help="Call duration in seconds. Default=3s", default=3.0, type=float)
     parser.add_argument("-a", "--architecture", help="Name of the architecture. If not given, all available "
                                                      "architectures will be used", type=str)
     parser.add_argument("-r", "--sample_rate", help="Sample rate to be used in the model, in Hz. Default=32000Hz",
@@ -52,7 +52,7 @@ def get_number_of_cpus() -> int:
 
 
 def get_sample_rate(row) -> Series:
-    sr: int = -1
+    sr: float = -1.0
     try:
         sr = librosa.get_samplerate(row['filename'])
     except Exception as ex:
@@ -78,11 +78,11 @@ def load_fileset(dir_with_files: Path, expected_sample_rate: int, log_file) -> D
     table = table.drop('SR', axis=1)
 
     for fp in table['filename']:
-        sr: int = librosa.get_samplerate(fp)
-        print(f'File [{fp}]: {sr / 1000}kHz', file=log_file)
+        sr: float = librosa.get_samplerate(fp)
+        print(f'File [{fp}]: {sr / 1000.0:.0f}kHz', file=log_file)
         if sr != expected_sample_rate:
             print(
-                f'File {fp} has {sr / 1000}kHz sampling rate, expected {expected_sample_rate}. Resampling not '
+                f'File {fp} has {sr / 1000.0:.0f}kHz sampling rate, expected {expected_sample_rate}. Resampling not '
                 f'implemented for training',
                 file=log_file)
             sys.exit(1)
@@ -91,9 +91,9 @@ def load_fileset(dir_with_files: Path, expected_sample_rate: int, log_file) -> D
     return table
 
 
-def prepare_training_data(data_dir: Path, expected_sample_rate: int, duration: int, output_dir: Path):
+def prepare_training_data(data_dir: Path, expected_sample_rate: int, duration: float, output_dir: Path):
     with open(output_dir / Path(f'training_data_log'), "w") as log_file:
-        version = pkg_resources.get_distribution("opensoundscape").version
+        version = metadata.version("opensoundscape")
         print(f'OpenSoundscape version: {version}.', file=log_file)
 
         training_dir: Path = data_dir / Path(f'training')
@@ -108,7 +108,10 @@ def prepare_training_data(data_dir: Path, expected_sample_rate: int, duration: i
         else:
             all_df: DataFrame = load_fileset(data_dir, expected_sample_rate, log_file)
             labels = all_df.columns.values.tolist()
-            training_df, validation_df = train_test_split(all_df, test_size=0.25, random_state=1, stratify=labels)
+            print(all_df.head())
+            print(f'labels: {labels} ')
+
+            training_df, validation_df = train_test_split(all_df, test_size=0.25, random_state=1)
 
         print(f'Training set classes: {str(labels)}', file=log_file)
         print(
@@ -179,7 +182,7 @@ def build_model(output_dir: Path, arch: str, train_df: DataFrame, validate_df: D
         validation_df=validate_df,
         save_path=model_out_dir,  # where to save the trained model
         epochs=n_epochs,
-        batch_size=20,
+        batch_size=64,
         save_interval=5,  # save model every 5 epochs (the best model is always saved in addition)
         num_workers=n_workers,  # specify 4 if you have 4 CPU processes, eg; 0 means only the root process
     )
@@ -191,7 +194,7 @@ def build_models(output_dir: Path, train_df: DataFrame, validate_df: DataFrame, 
                  n_epochs: int, single_target: bool):
     print(f'Building models sample duration: {duration}s, sample rate: {sample_rate_Hz}Hz')
     archs: List[str] = cnn_architectures.list_architectures()
-    archs = ['inception_v3', 'resnet18', 'resnet152', 'efficientnet_b0' ]
+    archs = ['inception_v3', 'resnet18', 'resnet152', 'efficientnet_b0']
     for arch in archs:
         try:
             build_model(output_dir, arch, train_df, validate_df, duration, sample_rate_Hz, n_epochs, single_target)
@@ -208,11 +211,11 @@ def start_building(args):
     chunk_duration: float = 3.0
 
     train_df, validate_df = prepare_training_data(args.input_data_dir, args.sample_rate, chunk_duration, out_dir)
-    build_models(out_dir, train_df, validate_df, args.duration, args.sample_rate, args.epochs, (not args.multi_target))
+    build_models(out_dir, train_df, validate_df, chunk_duration, args.sample_rate, args.epochs, (not args.multi_target))
 
 
 def list_architectures():
-    version = pkg_resources.get_distribution("opensoundscape").version
+    version = version = metadata.version("opensoundscape")
     #    model = CNN('resnet18', ["t1", "t2", "t3"], 3.0, single_target=False)
     print(f'OpenSoundscape version: {version}.\nAvailable CNN architectures:')
     archs: List[str] = cnn_architectures.list_architectures()
