@@ -191,7 +191,10 @@ def do_the_butchery(args):
                           f' {not_annot} _noise chunks created', file=log)
 
                 except Exception as ex:
-                    print(f"Error while processing {str(cdf.name)}: {ex}", file=log)
+                    print(f"Exception while processing {str(cdf.name)}: {ex}", file=log)
+                    traceback.print_stack(file=sys.stderr)
+                except:
+                    print(f"Error while processing {str(cdf.name)}", file=log)
                     traceback.print_stack(file=sys.stderr)
                 finally:
                     pass

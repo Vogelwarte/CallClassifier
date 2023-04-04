@@ -73,6 +73,8 @@ class Table1SelectionRecord(RelativeTimeSegment):
         file = open(filename, "r")
         curr = 0
         for line in file.readlines():
+            if len(line.strip()) == 0:
+                continue
             curr += 1
             data = line.split("\t")
             for i in range(0, len(data) ):
