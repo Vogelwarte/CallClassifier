@@ -171,17 +171,10 @@ def do_the_butchery(args):
                     for chunk in presents:
                         success, name = createChunk(chunk, audio_file, name_stem, exe_output_dir, str_present, args.resample)
                         if success:
-                            print(f'{str(name)} , 0, 1', file=labels)
+                            print(f'{str(name)}, 0, 1', file=labels)
                             c_count += 1
-                    #n_absent = ceil(duration / 60)
-                    #every_n: int = ceil( len(absents) / n_absent)
-                    every_n = 1
-                    i:int = 0
                     for chunk in absents:
-                        i+=1
                         sum_noise_length += chunk.duration()
-                        if i % every_n != 0:
-                            continue
                         success, name = createChunk(chunk, audio_file, name_stem, exe_output_dir, str_absent, args.resample)
                         if success:
                             print(f'{str(name)}, 1, 0', file=labels)
