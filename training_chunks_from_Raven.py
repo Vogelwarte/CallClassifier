@@ -123,6 +123,8 @@ def do_the_butchery(args):
         print(f'Commandline arguments: {args}', file=log)
         chunk_length: int = 3.0
         rp_name_checker: SynonymeChecker = SynonymeChecker.parse_file("rock_ptarmigan_synonym_regexps.txt")
+        rp_name_checker.empty_is_synonym(True)
+
         input_extension = ".Table.1.selections.txt"  # ".wav.csv"
         chunk_def_files = list_of_files(args.input_dir, input_extension)
         af_extension = ".wav"
@@ -197,7 +199,7 @@ def do_the_butchery(args):
 
             print(f'\n')
             print(f'End of processing, {datetime.now()}, processed {df_processed} of {len(chunk_def_files)} input audio+annotation files', file=log)
-            overall_dur: float = sum_call_length + sum_noise_length
+            overall_dur: float = max(1.0, sum_call_length + sum_noise_length)
             print(f'Sum duration of all used audio: {to_hh_mm_ss(overall_dur)},  ({overall_dur:.1f}s), ', file=log)
             print(f'Sum duration of CALLs: {to_hh_mm_ss(sum_call_length)},  ({sum_call_length:.1f}s), {sum_call_length*100.0 / overall_dur:.0f}%', file=log)
             print(f'sum duration of NO_CALL {to_hh_mm_ss(sum_noise_length)}  ({sum_noise_length:.1f}) {sum_noise_length*100.0 / overall_dur:.0f}%', file=log)

@@ -1,4 +1,5 @@
 import re
+import struct
 from re import Pattern
 from typing import TextIO, Dict, List
 
@@ -8,6 +9,11 @@ class SynonymeChecker:
     def __init__(self, name: str, regexps: List['Pattern']):
         self.name = name
         self.regexps = regexps
+        self.is_empty_a_synonyme = False
+
+    def empty_is_synonym(self,  is_empty_a_synonym: bool):
+        self.is_empty_a_synonyme = is_empty_a_synonym
+
 
     def is_synonyme(self, input: str) -> bool:
         """
@@ -26,6 +32,9 @@ class SynonymeChecker:
         :param input: string to be checked, if it maches any of the synonyms
         :return: (True, pattern), if the input matches a synonym, (False,None) else
         """
+        if self.is_empty_a_synonyme and len(input.strip()) == 0:
+            return True, None
+
         for r in self.regexps:
             if r.fullmatch(input):
                 return True, r.pattern
