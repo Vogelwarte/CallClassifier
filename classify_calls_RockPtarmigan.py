@@ -7,6 +7,7 @@ import sys
 import time
 from datetime import datetime
 from math import ceil
+from shutil import copytree, copy
 
 import pandas as pd
 
@@ -20,7 +21,7 @@ from pandas import DataFrame, Series
 from opensoundscape.torch.models.cnn import load_model, CNN
 from opensoundscape.audio import Audio
 
-from BNResultTools.files_dirs_tools import list_of_files_ex
+from BNResultTools.files_dirs_tools import list_of_files_ex, list_of_files
 from training_chunks_from_Raven import to_hh_mm_ss
 
 usage = """
@@ -31,7 +32,7 @@ usage = """
     Uses a dedicated OpenSoundscape CNN model traing on the Vogelwarte data from the Swiss Alps 2021-2022.
      
     The output files are:
-        <output_dir>/<audio_file>.Curlew_call_types.csv    
+        <output_dir>/<audio_file>.RpCC.selection.table.txt'
 """
 
 
@@ -51,22 +52,26 @@ def parse_command_line() -> SingleInputDefinition:
                         help="Path to output folder. It will be created id it doesn't exists")
     parser.add_argument('-l', '--file_list',
                         help="(optional) text file with names of the files to classify. The '--input' must be a dir. \
-                        If not preset all files from the input dire are procecessed recursively ")
+                        If not present all files from the input dir are procecessed recursively ")
+    parser.add_argument('-c', '--continue_in_dir',
+                        help="(optional) Continue prevoius analysis, which output dir is given. "
+                             "No classification  will be performed for an input file, "
+                             "for which a file *.RpCC.selection.table.txt can be found in this dir."
+                             "The old result files will be copied to the output directory")
     args = parser.parse_args()
 
     try:
-        base_dir, if_list = build_file_list(args)
         out_dir = Path(args.output)
         if out_dir.exists():
             if not out_dir.is_dir():
                 raise NotADirectoryError(f'{out_dir} cannot be an output folder')
         else:
             os.makedirs(out_dir, exist_ok=True)
-
         dt: datetime = datetime.utcnow()
         suffix: str = dt.strftime("%Y%m%d_%H%M%SUTC")
         out_dir = out_dir / f'classification_RockPtarmigan_{suffix}'
         os.makedirs(out_dir, exist_ok=True)
+        base_dir, if_list = build_file_list(args, out_dir)
         return SingleInputDefinition(if_list, base_dir, out_dir)
     except Exception as ex:
         print(ex, file=sys.stderr)
@@ -74,7 +79,7 @@ def parse_command_line() -> SingleInputDefinition:
         sys.exit(1)
 
 
-def build_file_list(args):
+def build_file_list(args, new_output_dir: Path):
     if_list: List[Path] = []
     extensions: List[str] = ["wav", "flac"]
     in_p = Path(args.input)
@@ -91,7 +96,7 @@ def build_file_list(args):
             if len(if_list) == 0:
                 raise RuntimeError(f'{in_p}: invalid filetype. Only {extensions} files are supported')
         else:
-            raise Exception(f'{in_p} is neither file nor directory')
+            raise Exception(f'{in_p} is neither audio file nor directory')
     if args.file_list:
         new_list:[Path] = []
         with open(args.file_list, "r") as fl_file:
@@ -100,7 +105,45 @@ def build_file_list(args):
                     f: Path = base_dir / line.strip()
                     new_list.append(f)
         if_list = new_list
+    if args.continue_in_dir:
+        if_list = filter_out_analysed_audio(if_list, base_dir, Path(args.continue_in_dir), new_output_dir)
     return base_dir, if_list
+
+
+def true_stem(path: Path) -> Path:
+   stem: Path = Path(path).stem
+   return stem if stem == path else true_stem(stem)
+
+def filter_out_analysed_audio(filelist: List[Path], base: Path, continue_dir: Path, output_dir:Path) -> List[Path]:
+    with open(output_dir/'input_skipping_log.txt', 'w') as skipping_log:
+        if not continue_dir.is_dir():
+            print(f"Ignoring continuation - not a dir: [{continue_dir}]", file=skipping_log)
+            return filelist
+        done_files: List[Path] = list_of_files(continue_dir, get_RpCC_selection_table_txt_extension() )
+        print(f"Continuation dir: {continue_dir}", file=skipping_log)
+
+        if len(done_files) == 0:
+            print(f"Continuation dir: [{continue_dir}] doesn't have any *{get_RpCC_selection_table_txt_extension()} files", file=skipping_log)
+            return filelist
+        relative_stems_done_files: str = []
+        for df in done_files:
+            new_dir: Path = output_dir / continue_dir.name / df.relative_to(continue_dir).parent
+            os.makedirs( new_dir, exist_ok=True )
+            copy(df, new_dir)
+            relative_stems_done_files.append(  str(df.relative_to(continue_dir).parent / true_stem( df )) )
+        new_list: List[Path] = []
+        skipped: int = 0
+
+        for f in filelist:
+            rel_stem: str = str( f.relative_to(base).parent /  true_stem(f) )
+            if rel_stem not in relative_stems_done_files:
+                new_list.append(f)
+            else:
+                skipped += 1
+                print(f"[{f}] skipped - already present in the '-c dir'", file=skipping_log)
+        print(f'\nTotal: {skipped} skipped files, {len(new_list)} passed for analysis.', file=skipping_log)
+    return new_list
+
 
 
 def get_birdnet_results(infile: Path, output_dir: Path, common_name: str, confidence: float) -> DataFrame:
@@ -231,6 +274,14 @@ def write_Audacity_labels_result(out_fp: Path, data: DataFrame):
     audacity_labels.to_csv(path_or_buf=out_fp, header=False, index=False, sep='\t', float_format="%.2f")
 
 
+def get_RpCC_selection_table_txt_extension() -> str:
+
+    return 'RpCC.selection.table.txt'
+
+#def get_RpCC_selection_table__file_path(audiofile_path) -> Path:
+#    file_name_no_ext: str = audiofile_path.stem
+#    return Path(f'{file_name_no_ext}.RpCC.selection.table.txt')
+
 def classify_audio_file(in_audio_fp: Path, output_dir: Path, model: CNN, model_name: str):
     print(f'Processing file: {in_audio_fp}...')
 
@@ -253,7 +304,7 @@ def classify_audio_file(in_audio_fp: Path, output_dir: Path, model: CNN, model_n
     file_name_no_ext: str = in_audio_fp.stem
 
     # classification_result DataFrame format: (numeric index), [start_time_, end_time, _noise, RockPtarmigan]
-    cc_result_fp: Path = output_dir / f'{file_name_no_ext}.RpCC.selection.table.txt'
+    cc_result_fp: Path = output_dir / f'{file_name_no_ext}.{get_RpCC_selection_table_txt_extension()}'
     write_BirdNET_like_result(cc_result_fp, classification_result)
 
     audacity_labels_fp: Path = output_dir / (f'labels-{model_name}_{file_name_no_ext}.txt')
