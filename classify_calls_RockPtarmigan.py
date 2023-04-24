@@ -361,6 +361,14 @@ def do_the_stuff():
                 except:
                     errors += 1
                     print(f'Unknown error with model {mn}, audio file {in_fp}', file=log_file)
+                cm_time = time.time() - mstart_proc
+                n_files: float = files_done + files_omitted + errors
+                if n_files > 1:
+                    fract: float =  n_files / len(input_def.input_files)
+                    message: str = f'{100.0 * fract:.2f}%, {n_files} of {len(input_def.input_files)} files, ' \
+                                   f'estimated model end in: {to_hh_mm_ss(cm_time / fract)} '
+                    print(message)
+                    print(message, file=log_file)
             mstart_proc = time.time() - mstart_proc
             print(f'Model {mn}, files done: {files_done}, omitted: {files_omitted}, errors:{errors}, '
                   f'processing time: {to_hh_mm_ss(mstart_proc)} ({mstart_proc:.1f}s), '
