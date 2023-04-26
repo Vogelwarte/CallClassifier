@@ -362,13 +362,16 @@ def do_the_stuff():
                     errors += 1
                     print(f'Unknown error with model {mn}, audio file {in_fp}', file=log_file)
                 cm_time = time.time() - mstart_proc
-                n_files: float = files_done + files_omitted + errors
+                n_files: float = files_done + files_omitted
                 if n_files > 1:
-                    fract: float =  n_files / len(input_def.input_files)
-                    message: str = f'{100.0 * fract:.2f}%, {n_files} of {len(input_def.input_files)} files, ' \
+                    fract: float =  n_files / max(1.0, len(input_def.input_files) - errors)
+                    message: str = f'{100.0 * fract:.2f}%, {n_files} of {len(input_def.input_files)-errors} files, ' \
                                    f'estimated model end in: {to_hh_mm_ss(cm_time / fract)} '
                     print(message)
                     print(message, file=log_file)
+                    if n_files % 500 == 0:
+                        # "refresh" the models every 500 processed files
+                        models = load_cnn_models(sample_rate)
             mstart_proc = time.time() - mstart_proc
             print(f'Model {mn}, files done: {files_done}, omitted: {files_omitted}, errors:{errors}, '
                   f'processing time: {to_hh_mm_ss(mstart_proc)} ({mstart_proc:.1f}s), '
