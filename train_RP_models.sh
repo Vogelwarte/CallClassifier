@@ -1,0 +1,1 @@
+python3 build_all_models.py -i bird_data/Rock_ptarmigan/training_data/chunks_RockPtarmigan_20230404_141510UTC  -e 60 -r 24000
