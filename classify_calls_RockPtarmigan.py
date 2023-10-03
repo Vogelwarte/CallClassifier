@@ -216,7 +216,7 @@ def get_number_of_cpus() -> int:
 def run_call_classifier_model(audio_file: Path, model: CNN) -> DataFrame:  # , curlew_calls_df: DataFrame) -> DataFrame:
     # print("\nClassifying the call types ...\n")
     n_cpus = get_number_of_cpus()
-    n_workers: int = max(1, n_cpus - 2)
+    n_workers: int = max(1, n_cpus - 5)
 
     pred_start: float = time.time()
     scores_df = model.predict(num_workers=n_workers,
@@ -369,7 +369,7 @@ def do_the_stuff():
                                    f'estimated model end in: {to_hh_mm_ss(cm_time / fract)} '
                     print(message)
                     print(message, file=log_file)
-                    if n_files % 500 == 0:
+                    if n_files % 200 == 0:
                         # "refresh" the models every 500 processed files
                         models = load_cnn_models(sample_rate)
             mstart_proc = time.time() - mstart_proc

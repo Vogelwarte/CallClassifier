@@ -63,6 +63,7 @@ def get_sample_rate(row) -> Series:
 def log_input_filelist_error(fl: DataFrame, title: str):
     print(title, file=sys.stderr)
     print(f'{len(fl)} file(s):', file=sys.stderr)
+    print(fl.head(), file=sys.stderr)
 
 
 def load_fileset(dir_with_files: Path, expected_sample_rate: int, log_file) -> DataFrame:
